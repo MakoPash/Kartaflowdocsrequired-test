@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KartaFlow — Your Polish Residency, Finally Under Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8132A;
+  --red-deep: #B50F20;
+  --red-soft: rgba(232,19,42,0.08);
+  --white: #FFFFFF;
+  --off-white: #F8F6F3;
+  --surface: #F2F0ED;
+  --surface-2: #ECEAE7;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.14);
+  --dark: #0D0D0D;
+  --text: #111111;
+  --text-2: #444444;
+  --text-3: #888888;
+  --success: #16A34A;
+  --warning: #D97706;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 100px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+}
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 700;
+  letter-spacing: -0.3px;
+  cursor: default;
+}
+.logo-karta { color: var(--dark); }
+.logo-flow { color: var(--red); }
+.lang-switcher {
+  display: flex; gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+}
+.lang-btn {
+  padding: 5px 14px;
+  border: none; background: none;
+  color: var(--text-3);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.lang-btn.active {
+  background: var(--dark);
+  color: #fff;
+}
+
+/* ── LAYOUT ── */
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 52px 24px 96px;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  margin-bottom: 44px;
+}
+@media (max-width: 600px) {
+  .progress-wrap {
+    position: sticky;
+    top: 56px;
+    z-index: 50;
+    background: var(--off-white);
+    padding: 12px 16px 10px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
+.progress-track {
+  height: 2px;
+  background: var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.progress-label {
+  display: flex; justify-content: space-between;
+  margin-top: 10px;
+}
+.progress-text {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.progress-pct {
+  font-size: 11px; font-weight: 600;
+  color: var(--red);
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  animation: fadeUp 0.35s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STEP LABEL ── */
+.step-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+/* ── DECISION BANNER ── */
+.decision-banner {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(217,119,6,0.08);
+  border: 1px solid rgba(217,119,6,0.25);
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 16px;
+  font-size: 11px; font-weight: 700;
+  color: var(--warning);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── QUESTION ── */
+.question-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px; font-weight: 700;
+  line-height: 1.3;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.question-subtitle {
+  font-size: 14px; color: var(--text-3);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+.question-purpose {
+  font-size: 13px; color: var(--text-2);
+  margin-bottom: 28px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--border-strong);
+  line-height: 1.5;
+}
+
+/* ── OPTIONS ── */
+.options-grid {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.option-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: var(--white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 400;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+.option-btn:hover {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+.option-btn.selected {
+  border-color: var(--red);
+  background: var(--red-soft);
+  color: var(--dark);
+  font-weight: 500;
+}
+.option-indicator {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  flex-shrink: 0;
+  transition: all 0.15s;
+  position: relative;
+}
+.option-btn.selected .option-indicator {
+  border-color: var(--red);
+  background: var(--red);
+}
+.option-btn.selected .option-indicator::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* ── GRADUATE DECISION CARDS ── */
+.grad-card {
+  padding: 20px 22px;
+  background: var(--white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-bottom: 10px;
+}
+.grad-card:hover { border-color: var(--red); background: var(--red-soft); }
+.grad-card.selected { border-color: var(--red); background: var(--red-soft); }
+.grad-card-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
+}
+.grad-card-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  flex-shrink: 0;
+  transition: all 0.15s;
+  position: relative;
+}
+.grad-card.selected .grad-card-dot {
+  background: var(--red);
+  border-color: var(--red);
+}
+.grad-card.selected .grad-card-dot::after {
+  content: '';
+  position: absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:6px;height:6px;
+  border-radius:50%;background:white;
+}
+.grad-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--dark);
+}
+.grad-card-desc {
+  font-size: 13px; color: var(--text-2);
+  line-height: 1.6;
+  padding-left: 32px;
+}
+
+/* ── COUNTRY SEARCH ── */
+.country-search-wrap { position: relative; }
+.country-input {
+  width: 100%;
+  padding: 13px 18px;
+  background: var(--white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.country-input:focus { border-color: var(--red); }
+.country-input::placeholder { color: var(--text-3); }
+.country-dropdown {
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  z-index: 200;
+  background: var(--white);
+  border: 1.5px solid var(--red);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  max-height: 220px;
+  overflow-y: auto;
+  display: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.country-option {
+  padding: 11px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  transition: background 0.12s;
+}
+.country-option:hover, .country-option.active { background: var(--red-soft); }
+.country-no-results {
+  padding: 12px 18px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* ── NAV BUTTONS ── */
+.nav-row {
+  display: flex; gap: 10px; margin-top: 32px;
+  justify-content: space-between; align-items: center;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  border: none;
+}
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(232,19,42,0.2);
+}
+.btn-primary:hover { background: var(--red-deep); }
+.btn-primary:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1.5px solid var(--border-strong);
+}
+.btn-ghost:hover { border-color: var(--text); color: var(--dark); }
+.btn-outline-red {
+  background: transparent;
+  color: var(--red);
+  border: 1.5px solid var(--red);
+}
+.btn-outline-red:hover { background: var(--red-soft); }
+
+/* ── CASE RESULT ── */
+.case-result {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  animation: fadeUp 0.35s ease;
+}
+.case-result-eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+.case-result-name {
+  font-family: 'Fraunces', serif;
+  font-size: 28px; font-weight: 900;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.case-result-explanation {
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.case-route {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+}
+.route-chip {
+  font-size: 12px; font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+.route-chip.current {
+  background: rgba(0,0,0,0.06);
+  color: var(--text-2);
+}
+.route-chip.target {
+  background: var(--red-soft);
+  color: var(--red);
+}
+.route-arrow { color: var(--text-3); font-size: 14px; }
+.warning-card {
+  margin-top: 16px;
+  background: rgba(217,119,6,0.07);
+  border: 1px solid rgba(217,119,6,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.6;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 36px 0 24px;
+}
+.section-line { flex: 1; height: 1px; background: var(--border-strong); }
+.section-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* ── DOCUMENT GROUPS ── */
+.doc-group-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-3);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-strong);
+  margin-bottom: 10px;
+  margin-top: 28px;
+}
+.doc-group-title:first-child { margin-top: 0; }
+
+/* ── DOCUMENT ITEMS ── */
+.doc-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px 16px 16px;
+  margin-bottom: 8px;
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: border-color 0.15s;
+  animation: fadeUp 0.3s ease;
+}
+.doc-item:hover { border-color: var(--border-strong); }
+.doc-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.doc-dot-mandatory { background: var(--red); }
+.doc-dot-conditional { background: var(--warning); }
+.doc-dot-optional { background: var(--success); }
+.doc-body { flex: 1; }
+.doc-name-en {
+  font-size: 14px; font-weight: 500;
+  color: var(--dark);
+  margin-bottom: 3px;
+}
+.doc-name-pl {
+  font-size: 12px; color: #2563eb;
+  margin-bottom: 2px;
+}
+.doc-name-ru {
+  font-size: 12px; color: var(--text-3);
+  margin-bottom: 10px;
+}
+.doc-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.doc-tag {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.tag-mandatory { background: var(--red-soft); color: var(--red); }
+.tag-conditional { background: rgba(217,119,6,0.09); color: var(--warning); }
+.tag-optional { background: rgba(22,163,74,0.09); color: var(--success); }
+.tag-source {
+  background: var(--surface);
+  color: var(--text-3);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.doc-notes {
+  margin-top: 8px;
+  font-size: 12px; color: var(--text-3);
+  font-style: italic;
+  padding: 6px 10px;
+  background: var(--surface);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── RESET ── */
+.reset-btn {
+  display: block;
+  margin: 40px auto 0;
+  padding: 11px 32px;
+  background: transparent;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--text-3);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.reset-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+/* ── MOBILE FIRST — FULL PHONE OPTIMISATION ── */
+
+/* Bigger touch targets for all interactive elements */
+.option-btn {
+  min-height: 52px;
+  -webkit-tap-highlight-color: transparent;
+}
+.grad-card {
+  -webkit-tap-highlight-color: transparent;
+}
+.btn {
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
+}
+.lang-btn {
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  min-width: 44px;
+}
+.country-option {
+  min-height: 48px;
+  display: flex; align-items: center;
+}
+
+/* Prevent iOS zoom on input focus */
+.country-input {
+  font-size: 16px !important;
+}
+
+/* Smooth scroll behaviour */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ── PHONE ── */
+@media (max-width: 600px) {
+
+  /* Header — tighter on phone */
+  header {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .logo { font-size: 18px; }
+  .lang-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* Main — card starts below sticky progress */
+  main {
+    padding: 16px 0 100px;
+  }
+
+  /* Card — flush sides on phone, just top/bottom radius */
+  .card {
+    border-radius: 16px;
+    padding: 24px 20px 28px;
+    margin: 0 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  /* Case result same */
+  .case-result {
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 0 12px 16px;
+  }
+
+  /* Question title — readable on small screen */
+  .question-title {
+    font-size: 20px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  /* Purpose box — smaller text, less padding */
+  .question-purpose {
+    font-size: 12px;
+    padding: 9px 12px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Option buttons — full height, easy tap */
+  .options-grid { gap: 9px; }
+  .option-btn {
+    padding: 15px 16px;
+    font-size: 14px;
+    min-height: 54px;
+    border-radius: 10px;
+    gap: 12px;
+  }
+
+  /* Nav buttons — stack vertically, Continue full width */
+  .nav-row {
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 15px 24px;
+    font-size: 15px;
+    text-align: center;
+    justify-content: center;
+  }
+  .btn-ghost {
+    width: 100%;
+    padding: 13px 24px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Graduate decision cards */
+  .grad-card {
+    padding: 18px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .grad-card-title { font-size: 14px; }
+  .grad-card-desc {
+    font-size: 13px;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+  .grad-card-header { margin-bottom: 6px; }
+
+  /* Country search — bigger dropdown for thumb scroll */
+  .country-dropdown { max-height: 260px; }
+  .country-option {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  /* Case result */
+  .case-result-name {
+    font-size: 22px;
+  }
+  .case-route {
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+  .route-chip {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  /* Document items — compact but readable */
+  .doc-item {
+    padding: 14px 14px 14px 12px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+  .doc-name-en { font-size: 13px; }
+  .doc-name-pl, .doc-name-ru { font-size: 11px; }
+  .doc-tag { font-size: 10px; padding: 2px 7px; }
+
+  /* Section labels flush */
+  .section-divider { margin: 28px 12px 20px; }
+  .doc-group-title { margin-top: 24px; }
+
+  /* Document groups */
+  .doc-item-wrap { margin: 0 12px; }
+
+  /* Reset button */
+  .reset-btn {
+    width: calc(100% - 24px);
+    margin: 32px 12px 0;
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+
+  /* Step label */
+  .step-label { font-size: 10px; margin-bottom: 8px; }
+  .decision-banner { font-size: 10px; padding: 5px 10px; }
+}
+
+/* ── SMALL PHONES (iPhone SE, 375px) ── */
+@media (max-width: 380px) {
+  .card { margin: 0 8px; padding: 20px 16px 24px; }
+  .case-result { margin: 0 8px 12px; padding: 20px 16px; }
+  .question-title { font-size: 18px; }
+  .option-btn { font-size: 13px; padding: 14px 14px; }
+  .case-result-name { font-size: 19px; }
+}
+
+/* ── SAFE AREA for iPhone notch / home bar ── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  main {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-karta">Karta</span><span class="logo-flow">Flow</span>
+  </div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('pl')">PL</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+  </div>
+</header>
+
+<main>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label">
+      <span class="progress-text" id="progressStepText">Step 1</span>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+  </div>
+  <div id="appContainer"></div>
+</main>
+
+<script>
+// ─── TRANSLATIONS ─────────────────────────────────────────────────────────────
+const T = {
+  stepLabel: { en: 'Step', pl: 'Krok', ru: 'Шаг' },
+  of: { en: 'of', pl: 'z', ru: 'из' },
+  purposeLabel: { en: 'Why we ask this', pl: 'Dlaczego pytamy', ru: 'Почему мы спрашиваем' },
+  backBtn: { en: 'Back', pl: 'Wstecz', ru: 'Назад' },
+  nextBtn: { en: 'Continue', pl: 'Kontynuuj', ru: 'Продолжить' },
+  startOver: { en: 'Start a new assessment', pl: 'Zacznij od nowa', ru: 'Начать заново' },
+  yourCase: { en: 'Your Case', pl: 'Twój przypadek', ru: 'Ваш случай' },
+  caseAssigned: { en: 'Case Type Assigned', pl: 'Przypisany typ sprawy', ru: 'Тип дела определён' },
+  documentsTitle: { en: 'Required Documents', pl: 'Wymagane dokumenty', ru: 'Необходимые документы' },
+  documentsSubtitle: { en: 'Based on your case type, prepare the following documents for your application.', pl: 'Na podstawie typu sprawy przygotuj następujące dokumenty.', ru: 'На основе вашего типа дела подготовьте следующие документы.' },
+  alwaysGroup: { en: 'Mandatory — always required', pl: 'Obowiązkowe — zawsze wymagane', ru: 'Обязательные — всегда требуются' },
+  conditionalGroup: { en: 'Conditional — required in specific situations', pl: 'Warunkowe — wymagane w konkretnych sytuacjach', ru: 'Условные — требуются в определённых ситуациях' },
+  optionalGroup: { en: 'Optional — attach if you have it', pl: 'Opcjonalne — dołącz jeśli posiadasz', ru: 'Необязательные — приложите при наличии' },
+  searchPlaceholder: { en: 'Type to search country...', pl: 'Wpisz kraj...', ru: 'Введите страну...' },
+  noResults: { en: 'No results', pl: 'Brak wyników', ru: 'Нет результатов' },
+  decisionPoint: { en: 'Decision point — read carefully', pl: 'Punkt decyzji — przeczytaj uważnie', ru: 'Точка выбора — прочитайте внимательно' },
+  caseExplanations: {
+    'CT-01': {
+      en: 'You are applying for your first Temporary Residence Card in Poland on the basis of studies. Your current student (or other) visa means this is a new first-time TRC application.',
+      pl: 'Składasz wniosek o pierwszą Kartę Pobytu w Polsce na podstawie studiów. Twoja obecna wiza studencka (lub inna) oznacza, że jest to nowy wniosek.',
+      ru: 'Вы подаёте заявление на первую Карту Временного Пребывания в Польше на основании обучения. Ваша текущая виза означает, что это новая первичная заявка.'
+    },
+    'CT-02': {
+      en: 'You are extending your existing study-based TRC. Since you already hold a Polish residence card for studies, this is a renewal application.',
+      pl: 'Przedłużasz obecną Kartę Pobytu na podstawie studiów. Ponieważ masz już kartę pobytową, jest to wniosek o przedłużenie.',
+      ru: 'Вы продлеваете существующую КВП на основании обучения. Поскольку у вас уже есть карта, это заявление о продлении.'
+    },
+    'CT-03': {
+      en: 'You have graduated from a Polish institution and are applying for a graduate job-search permit (Article 144). This allows you to stay in Poland while actively seeking employment in your field.',
+      pl: 'Ukończyłeś uczelnię w Polsce i składasz wniosek o zezwolenie dla absolwentów (Art. 144). Możesz pozostać w Polsce szukając pracy.',
+      ru: 'Вы окончили польское учебное заведение и подаёте заявление на разрешение для выпускников (Ст. 144). Это позволяет оставаться в Польше в поисках работы.'
+    },
+    'CT-04': {
+      en: 'You currently hold a study TRC but are switching to a work-based TRC. This happens when you have found employment and wish to change your legal basis of stay.',
+      pl: 'Posiadasz kartę pobytową na studia, ale przechodzisz na kartę pobytową w celu pracy. Dzieje się tak po znalezieniu zatrudnienia.',
+      ru: 'У вас КВП для обучения, но вы переходите на КВП для работы. Это происходит, когда вы нашли работу и хотите изменить основание пребывания.'
+    },
+    'CT-05': {
+      en: 'You currently hold a work visa and are applying for a work-based Temporary Residence Card. This formalises your long-term right to work and live in Poland.',
+      pl: 'Posiadasz wizę pracowniczą i składasz wniosek o Kartę Pobytu na podstawie pracy. Formalizuje to prawo do pracy i życia w Polsce.',
+      ru: 'У вас рабочая виза, и вы подаёте заявление на КВП на основании работы. Это формализует ваше право на работу и проживание в Польше.'
+    },
+    'CT-06': {
+      en: 'You are extending your existing work-based TRC, continuing with the same employer or in a standard renewal situation.',
+      pl: 'Przedłużasz obecną Kartę Pobytu na podstawie pracy u tego samego pracodawcy lub w standardowym trybie odnowienia.',
+      ru: 'Вы продлеваете существующую КВП на основании работы у того же работодателя или в стандартном режиме продления.'
+    },
+    'CT-07': {
+      en: 'You changed your employer while holding a work TRC without notifying the Voivode, and your employer is named in your residence decision. This requires a special change-of-decision application rather than a standard renewal.',
+      pl: 'Zmieniłeś pracodawcę posiadając kartę pobytową bez powiadomienia Wojewody, a pracodawca jest wskazany w decyzji. Wymagany jest wniosek o zmianę decyzji.',
+      ru: 'Вы сменили работодателя, имея КВП, не уведомив Воеводу, и работодатель указан в решении (decyzja). Требуется специальное заявление об изменении решения.'
+    },
+    'CT-08': {
+      en: 'You are applying for a Temporary Residence Card based on family reunification — joining a family member who already holds a valid Polish residence permit.',
+      pl: 'Składasz wniosek o Kartę Pobytu na podstawie łączenia rodzin — dołączasz do członka rodziny posiadającego ważne polskie zezwolenie na pobyt.',
+      ru: 'Вы подаёте заявление на КВП на основании воссоединения семьи — присоединяетесь к члену семьи с действующим польским разрешением на пребывание.'
+    },
+    'CT-09': {
+      en: 'You are applying for a Temporary Residence Card based on other circumstances not covered by standard categories. You will need documents explaining your specific situation.',
+      pl: 'Składasz wniosek o Kartę Pobytu na podstawie innych okoliczności. Będziesz potrzebować dokumentów wyjaśniających Twoją sytuację.',
+      ru: 'Вы подаёте заявление на КВП на основании иных обстоятельств. Вам потребуются документы, объясняющие вашу конкретную ситуацию.'
+    }
+  }
+};
+
+const CONDITIONS = {
+  ALWAYS: { en: 'Always required', pl: 'Zawsze wymagany', ru: 'Всегда требуется', cls: 'tag-mandatory', dotCls: 'doc-dot-mandatory' },
+  IF_AVAILABLE: { en: 'Attach if available', pl: 'Dołącz jeśli posiadasz', ru: 'Приложите при наличии', cls: 'tag-optional', dotCls: 'doc-dot-optional' },
+  IF_REQUESTED: { en: 'Only if specifically requested', pl: 'Tylko jeśli wymagany', ru: 'Только по запросу', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_ON_TRC: { en: 'Only if you currently hold a TRC', pl: 'Tylko jeśli posiadasz Kartę Pobytu', ru: 'Только если у вас есть КВП', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_STUDENT_NEXT_YEAR: { en: 'If continuing studies next academic year', pl: 'Jeśli kontynuujesz studia w następnym roku', ru: 'При продолжении учёбы в следующем году', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_STUDENT_ON_ZLECENIE: { en: 'If student working under umowa zlecenia', pl: 'Jeśli student na umowie zlecenia', ru: 'Если студент на договоре поручения', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_NOT_STUDENT: { en: 'If you are NOT a student', pl: 'Jeśli NIE jesteś studentem', ru: 'Если вы НЕ студент', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_EMPLOYER_CHANGE: { en: 'If you changed employer during TRC validity', pl: 'Przy zmianie pracodawcy w czasie ważności karty', ru: 'При смене работодателя в период действия КВП', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_WORKED_PREVIOUS_YEAR: { en: 'If you worked in the previous tax year', pl: 'Jeśli pracowałeś w poprzednim roku', ru: 'Если работали в предыдущем налоговом году', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_NO_ACCESS_TO_LABOUR_MARKET: { en: 'If no automatic access to Polish labour market', pl: 'Jeśli bez automatycznego dostępu do rynku pracy', ru: 'Без автоматического доступа к польскому рынку труда', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_POLISH_GRADUATE: { en: 'If graduated from a Polish university', pl: 'Jeśli ukończyłeś polską uczelnię', ru: 'Если выпускник польского университета', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' }
+};
+
+const DOCUMENT_MATRIX = {
+  'CT-01': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Zaświadczenie z uczelni o przyjęciu na studia', en: 'Certificate from university confirming admission', ru: 'Справка из университета о зачислении на обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with information about fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'IF_STUDENT_NEXT_YEAR', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'IF_STUDENT_NEXT_YEAR', source: 'Uczelnia (University)', notes: null },
+  ],
+  'CT-02': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+  ],
+  'CT-03': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Dyplom + kopia', en: 'Diploma (university graduation certificate) + copy', ru: 'Диплом об окончании университета + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+  ],
+  'CT-04': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
+    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
+  ],
+  'CT-05': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Umowa o pracę / zlecenia - kopia', en: 'Employment contract (copy)', ru: 'Копия трудового договора', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
+    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A / statement of intent to employ)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: 'Permit type A / oświadczenie o powierzeniu pracy / zawiadomienie' },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой службы об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zaświadczenie ZUS o braku zaległości w opłacaniu składek', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности по взносам', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+  ],
+  'CT-06': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
+    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A / statement of intent to employ)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой службы об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zaświadczenie ZUS o braku zaległości', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+  ],
+  'CT-07': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 220 złotych', en: 'Stamp duty payment confirmation 220 PLN', ru: 'Подтверждение оплаты гербового сбора 220 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Note: 220 PLN for change of decision (not 340 PLN)' },
+    { pl: 'Nowa umowa o pracę/zlecenia – kopia notarialnie poświadczona', en: 'New employment/mandate contract – notarized copy', ru: 'Новый трудовой договор — нотариально заверенная копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
+    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem (pracodawca)', en: 'ZUS ZUA registration (employer copy)', ru: 'ZUS ZUA — копия работодателя', condition: 'IF_NOT_STUDENT', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Zaświadczenie ZUS o braku zaległości', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+  ],
+  'CT-08': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Akt małżeństwa lub akt urodzenia + kopia', en: 'Marriage certificate or birth certificate + copy', ru: 'Свидетельство о браке или свидетельство о рождении + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Tłumaczenie przysięgłe aktu małżeństwa lub urodzenia', en: 'Certified sworn translation of marriage/birth certificate', ru: 'Присяжный перевод свидетельства о браке/рождении', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Paszport głównego wnioskodawcy + kopia', en: 'Main applicant (sponsor) passport + copy', ru: 'Паспорт основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Karta pobytu głównego wnioskodawcy + kopia', en: 'Main applicant residence card + copy', ru: 'Карта побыту основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt głównego wnioskodawcy + kopia', en: 'Main applicant residence decision + copy', ru: 'Решение о пребывании основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający stabilny dochód', en: 'Document confirming stable income', ru: 'Документ, подтверждающий стабильный доход', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokumenty potwierdzające wspólne zamieszkiwanie', en: 'Documents confirming cohabitation and joint household', ru: 'Документы, подтверждающие совместное проживание', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Joint photos from different periods, shared bank account, shared property ownership' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Private insurance or ZUS ZUA/ZUS ZCNA' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Karta pobytu + ksero', en: 'Your own residence card + copy (if applicable)', ru: 'Ваша карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Your own residence decision + copy (if applicable)', ru: 'Ваше решение о пребывании + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+  ],
+  'CT-09': [
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
+    { pl: 'Dokumenty potwierdzające okoliczności', en: 'Documents confirming your specific circumstances', ru: 'Документы, подтверждающие обстоятельства', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Specific to your situation — consult your advisor' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Dokument potwierdzający środki finansowe', en: 'Document confirming financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+  ]
+};
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let lang = 'en';
+let answers = {};
+let currentStep = 0;
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+function tx(key) { return T[key][lang] || T[key].en; }
+function tObj(obj) { return obj[lang] || obj.en || ''; }
+
+// ─── QUESTIONS ─────────────────────────────────────────────────────────────
+function getQuestions() {
+  return [
+    {
+      id: 'citizenship', type: 'select',
+      question: { en: 'What is your citizenship?', pl: 'Jakie jest Twoje obywatelstwo?', ru: 'Какое у вас гражданство?' },
+      purpose: { en: 'Determines the applicable work permit rules and your legal scenario in Poland.', pl: 'Określa zasady dotyczące zezwolenia na pracę i Twój scenariusz prawny w Polsce.', ru: 'Определяет правила выдачи разрешений на работу и ваш правовой сценарий.' },
+      showWhen: () => true,
+      options: [
+        { value: 'AF', label: { en: 'Afghanistan', pl: 'Afganistan', ru: 'Афганистан' } },
+        { value: 'AL', label: { en: 'Albania', pl: 'Albania', ru: 'Албания' } },
+        { value: 'DZ', label: { en: 'Algeria', pl: 'Algieria', ru: 'Алжир' } },
+        { value: 'AD', label: { en: 'Andorra', pl: 'Andorra', ru: 'Андорра' } },
+        { value: 'AO', label: { en: 'Angola', pl: 'Angola', ru: 'Ангола' } },
+        { value: 'AG', label: { en: 'Antigua and Barbuda', pl: 'Antigua i Barbuda', ru: 'Антигуа и Барбуда' } },
+        { value: 'AR', label: { en: 'Argentina', pl: 'Argentyna', ru: 'Аргентина' } },
+        { value: 'AM', label: { en: 'Armenia', pl: 'Armenia', ru: 'Армения' } },
+        { value: 'AU', label: { en: 'Australia', pl: 'Australia', ru: 'Австралия' } },
+        { value: 'AT', label: { en: 'Austria', pl: 'Austria', ru: 'Австрия' } },
+        { value: 'AZ', label: { en: 'Azerbaijan', pl: 'Azerbejdżan', ru: 'Азербайджан' } },
+        { value: 'BS', label: { en: 'Bahamas', pl: 'Bahamy', ru: 'Багамы' } },
+        { value: 'BH', label: { en: 'Bahrain', pl: 'Bahrajn', ru: 'Бахрейн' } },
+        { value: 'BD', label: { en: 'Bangladesh', pl: 'Bangladesz', ru: 'Бангладеш' } },
+        { value: 'BB', label: { en: 'Barbados', pl: 'Barbados', ru: 'Барбадос' } },
+        { value: 'BY', label: { en: 'Belarus', pl: 'Białoruś', ru: 'Беларусь' } },
+        { value: 'BE', label: { en: 'Belgium', pl: 'Belgia', ru: 'Бельгия' } },
+        { value: 'BZ', label: { en: 'Belize', pl: 'Belize', ru: 'Белиз' } },
+        { value: 'BJ', label: { en: 'Benin', pl: 'Benin', ru: 'Бенин' } },
+        { value: 'BT', label: { en: 'Bhutan', pl: 'Bhutan', ru: 'Бутан' } },
+        { value: 'BO', label: { en: 'Bolivia', pl: 'Boliwia', ru: 'Боливия' } },
+        { value: 'BA', label: { en: 'Bosnia and Herzegovina', pl: 'Bośnia i Hercegowina', ru: 'Босния и Герцеговина' } },
+        { value: 'BW', label: { en: 'Botswana', pl: 'Botswana', ru: 'Ботсвана' } },
+        { value: 'BR', label: { en: 'Brazil', pl: 'Brazylia', ru: 'Бразилия' } },
+        { value: 'BN', label: { en: 'Brunei', pl: 'Brunei', ru: 'Бруней' } },
+        { value: 'BG', label: { en: 'Bulgaria', pl: 'Bułgaria', ru: 'Болгария' } },
+        { value: 'BF', label: { en: 'Burkina Faso', pl: 'Burkina Faso', ru: 'Буркина-Фасо' } },
+        { value: 'BI', label: { en: 'Burundi', pl: 'Burundi', ru: 'Бурунди' } },
+        { value: 'CV', label: { en: 'Cabo Verde', pl: 'Republika Zielonego Przylądka', ru: 'Кабо-Верде' } },
+        { value: 'KH', label: { en: 'Cambodia', pl: 'Kambodża', ru: 'Камбоджа' } },
+        { value: 'CM', label: { en: 'Cameroon', pl: 'Kamerun', ru: 'Камерун' } },
+        { value: 'CA', label: { en: 'Canada', pl: 'Kanada', ru: 'Канада' } },
+        { value: 'CF', label: { en: 'Central African Republic', pl: 'Republika Środkowoafrykańska', ru: 'ЦАР' } },
+        { value: 'TD', label: { en: 'Chad', pl: 'Czad', ru: 'Чад' } },
+        { value: 'CL', label: { en: 'Chile', pl: 'Chile', ru: 'Чили' } },
+        { value: 'CN', label: { en: 'China', pl: 'Chiny', ru: 'Китай' } },
+        { value: 'CO', label: { en: 'Colombia', pl: 'Kolumbia', ru: 'Колумбия' } },
+        { value: 'KM', label: { en: 'Comoros', pl: 'Komory', ru: 'Коморы' } },
+        { value: 'CG', label: { en: 'Congo', pl: 'Kongo', ru: 'Конго' } },
+        { value: 'CD', label: { en: 'Congo (DRC)', pl: 'Kongo (DRC)', ru: 'Конго (ДРК)' } },
+        { value: 'CR', label: { en: 'Costa Rica', pl: 'Kostaryka', ru: 'Коста-Рика' } },
+        { value: 'HR', label: { en: 'Croatia', pl: 'Chorwacja', ru: 'Хорватия' } },
+        { value: 'CU', label: { en: 'Cuba', pl: 'Kuba', ru: 'Куба' } },
+        { value: 'CY', label: { en: 'Cyprus', pl: 'Cypr', ru: 'Кипр' } },
+        { value: 'CZ', label: { en: 'Czech Republic', pl: 'Czechy', ru: 'Чехия' } },
+        { value: 'DK', label: { en: 'Denmark', pl: 'Dania', ru: 'Дания' } },
+        { value: 'DJ', label: { en: 'Djibouti', pl: 'Dżibuti', ru: 'Джибути' } },
+        { value: 'DM', label: { en: 'Dominica', pl: 'Dominika', ru: 'Доминика' } },
+        { value: 'DO', label: { en: 'Dominican Republic', pl: 'Dominikana', ru: 'Доминиканская Республика' } },
+        { value: 'EC', label: { en: 'Ecuador', pl: 'Ekwador', ru: 'Эквадор' } },
+        { value: 'EG', label: { en: 'Egypt', pl: 'Egipt', ru: 'Египет' } },
+        { value: 'SV', label: { en: 'El Salvador', pl: 'Salwador', ru: 'Сальвадор' } },
+        { value: 'GQ', label: { en: 'Equatorial Guinea', pl: 'Gwinea Równikowa', ru: 'Экваториальная Гвинея' } },
+        { value: 'ER', label: { en: 'Eritrea', pl: 'Erytrea', ru: 'Эритрея' } },
+        { value: 'EE', label: { en: 'Estonia', pl: 'Estonia', ru: 'Эстония' } },
+        { value: 'SZ', label: { en: 'Eswatini', pl: 'Eswatini', ru: 'Эсватини' } },
+        { value: 'ET', label: { en: 'Ethiopia', pl: 'Etiopia', ru: 'Эфиопия' } },
+        { value: 'FJ', label: { en: 'Fiji', pl: 'Fidżi', ru: 'Фиджи' } },
+        { value: 'FI', label: { en: 'Finland', pl: 'Finlandia', ru: 'Финляндия' } },
+        { value: 'FR', label: { en: 'France', pl: 'Francja', ru: 'Франция' } },
+        { value: 'GA', label: { en: 'Gabon', pl: 'Gabon', ru: 'Габон' } },
+        { value: 'GM', label: { en: 'Gambia', pl: 'Gambia', ru: 'Гамбия' } },
+        { value: 'GE', label: { en: 'Georgia', pl: 'Gruzja', ru: 'Грузия' } },
+        { value: 'DE', label: { en: 'Germany', pl: 'Niemcy', ru: 'Германия' } },
+        { value: 'GH', label: { en: 'Ghana', pl: 'Ghana', ru: 'Гана' } },
+        { value: 'GR', label: { en: 'Greece', pl: 'Grecja', ru: 'Греция' } },
+        { value: 'GD', label: { en: 'Grenada', pl: 'Grenada', ru: 'Гренада' } },
+        { value: 'GT', label: { en: 'Guatemala', pl: 'Gwatemala', ru: 'Гватемала' } },
+        { value: 'GN', label: { en: 'Guinea', pl: 'Gwinea', ru: 'Гвинея' } },
+        { value: 'GW', label: { en: 'Guinea-Bissau', pl: 'Gwinea Bissau', ru: 'Гвинея-Бисау' } },
+        { value: 'GY', label: { en: 'Guyana', pl: 'Gujana', ru: 'Гайана' } },
+        { value: 'HT', label: { en: 'Haiti', pl: 'Haiti', ru: 'Гаити' } },
+        { value: 'HN', label: { en: 'Honduras', pl: 'Honduras', ru: 'Гондурас' } },
+        { value: 'HU', label: { en: 'Hungary', pl: 'Węgry', ru: 'Венгрия' } },
+        { value: 'IS', label: { en: 'Iceland', pl: 'Islandia', ru: 'Исландия' } },
+        { value: 'IN', label: { en: 'India', pl: 'Indie', ru: 'Индия' } },
+        { value: 'ID', label: { en: 'Indonesia', pl: 'Indonezja', ru: 'Индонезия' } },
+        { value: 'IR', label: { en: 'Iran', pl: 'Iran', ru: 'Иран' } },
+        { value: 'IQ', label: { en: 'Iraq', pl: 'Irak', ru: 'Ирак' } },
+        { value: 'IE', label: { en: 'Ireland', pl: 'Irlandia', ru: 'Ирландия' } },
+        { value: 'IL', label: { en: 'Israel', pl: 'Izrael', ru: 'Израиль' } },
+        { value: 'IT', label: { en: 'Italy', pl: 'Włochy', ru: 'Италия' } },
+        { value: 'JM', label: { en: 'Jamaica', pl: 'Jamajka', ru: 'Ямайка' } },
+        { value: 'JP', label: { en: 'Japan', pl: 'Japonia', ru: 'Япония' } },
+        { value: 'JO', label: { en: 'Jordan', pl: 'Jordania', ru: 'Иордания' } },
+        { value: 'KZ', label: { en: 'Kazakhstan', pl: 'Kazachstan', ru: 'Казахстан' } },
+        { value: 'KE', label: { en: 'Kenya', pl: 'Kenia', ru: 'Кения' } },
+        { value: 'KI', label: { en: 'Kiribati', pl: 'Kiribati', ru: 'Кирибати' } },
+        { value: 'KW', label: { en: 'Kuwait', pl: 'Kuwejt', ru: 'Кувейт' } },
+        { value: 'KG', label: { en: 'Kyrgyzstan', pl: 'Kirgistan', ru: 'Кыргызстан' } },
+        { value: 'LA', label: { en: 'Laos', pl: 'Laos', ru: 'Лаос' } },
+        { value: 'LV', label: { en: 'Latvia', pl: 'Łotwa', ru: 'Латвия' } },
+        { value: 'LB', label: { en: 'Lebanon', pl: 'Liban', ru: 'Ливан' } },
+        { value: 'LS', label: { en: 'Lesotho', pl: 'Lesotho', ru: 'Лесото' } },
+        { value: 'LR', label: { en: 'Liberia', pl: 'Liberia', ru: 'Либерия' } },
+        { value: 'LY', label: { en: 'Libya', pl: 'Libia', ru: 'Ливия' } },
+        { value: 'LI', label: { en: 'Liechtenstein', pl: 'Liechtenstein', ru: 'Лихтенштейн' } },
+        { value: 'LT', label: { en: 'Lithuania', pl: 'Litwa', ru: 'Литва' } },
+        { value: 'LU', label: { en: 'Luxembourg', pl: 'Luksemburg', ru: 'Люксембург' } },
+        { value: 'MG', label: { en: 'Madagascar', pl: 'Madagaskar', ru: 'Мадагаскар' } },
+        { value: 'MW', label: { en: 'Malawi', pl: 'Malawi', ru: 'Малави' } },
+        { value: 'MY', label: { en: 'Malaysia', pl: 'Malezja', ru: 'Малайзия' } },
+        { value: 'MV', label: { en: 'Maldives', pl: 'Malediwy', ru: 'Мальдивы' } },
+        { value: 'ML', label: { en: 'Mali', pl: 'Mali', ru: 'Мали' } },
+        { value: 'MT', label: { en: 'Malta', pl: 'Malta', ru: 'Мальта' } },
+        { value: 'MH', label: { en: 'Marshall Islands', pl: 'Wyspy Marshalla', ru: 'Маршалловы Острова' } },
+        { value: 'MR', label: { en: 'Mauritania', pl: 'Mauretania', ru: 'Мавритания' } },
+        { value: 'MU', label: { en: 'Mauritius', pl: 'Mauritius', ru: 'Маврикий' } },
+        { value: 'MX', label: { en: 'Mexico', pl: 'Meksyk', ru: 'Мексика' } },
+        { value: 'FM', label: { en: 'Micronesia', pl: 'Mikronezja', ru: 'Микронезия' } },
+        { value: 'MD', label: { en: 'Moldova', pl: 'Mołdawia', ru: 'Молдова' } },
+        { value: 'MC', label: { en: 'Monaco', pl: 'Monako', ru: 'Монако' } },
+        { value: 'MN', label: { en: 'Mongolia', pl: 'Mongolia', ru: 'Монголия' } },
+        { value: 'ME', label: { en: 'Montenegro', pl: 'Czarnogóra', ru: 'Черногория' } },
+        { value: 'MA', label: { en: 'Morocco', pl: 'Maroko', ru: 'Марокко' } },
+        { value: 'MZ', label: { en: 'Mozambique', pl: 'Mozambik', ru: 'Мозамбик' } },
+        { value: 'MM', label: { en: 'Myanmar', pl: 'Myanmar', ru: 'Мьянма' } },
+        { value: 'NA', label: { en: 'Namibia', pl: 'Namibia', ru: 'Намибия' } },
+        { value: 'NR', label: { en: 'Nauru', pl: 'Nauru', ru: 'Науру' } },
+        { value: 'NP', label: { en: 'Nepal', pl: 'Nepal', ru: 'Непал' } },
+        { value: 'NL', label: { en: 'Netherlands', pl: 'Holandia', ru: 'Нидерланды' } },
+        { value: 'NZ', label: { en: 'New Zealand', pl: 'Nowa Zelandia', ru: 'Новая Зеландия' } },
+        { value: 'NI', label: { en: 'Nicaragua', pl: 'Nikaragua', ru: 'Никарагуа' } },
+        { value: 'NE', label: { en: 'Niger', pl: 'Niger', ru: 'Нигер' } },
+        { value: 'NG', label: { en: 'Nigeria', pl: 'Nigeria', ru: 'Нигерия' } },
+        { value: 'KP', label: { en: 'North Korea', pl: 'Korea Północna', ru: 'Северная Корея' } },
+        { value: 'MK', label: { en: 'North Macedonia', pl: 'Macedonia Północna', ru: 'Северная Македония' } },
+        { value: 'NO', label: { en: 'Norway', pl: 'Norwegia', ru: 'Норвегия' } },
+        { value: 'OM', label: { en: 'Oman', pl: 'Oman', ru: 'Оман' } },
+        { value: 'PK', label: { en: 'Pakistan', pl: 'Pakistan', ru: 'Пакистан' } },
+        { value: 'PW', label: { en: 'Palau', pl: 'Palau', ru: 'Палау' } },
+        { value: 'PA', label: { en: 'Panama', pl: 'Panama', ru: 'Панама' } },
+        { value: 'PG', label: { en: 'Papua New Guinea', pl: 'Papua Nowa Gwinea', ru: 'Папуа Новая Гвинея' } },
+        { value: 'PY', label: { en: 'Paraguay', pl: 'Paragwaj', ru: 'Парагвай' } },
+        { value: 'PE', label: { en: 'Peru', pl: 'Peru', ru: 'Перу' } },
+        { value: 'PH', label: { en: 'Philippines', pl: 'Filipiny', ru: 'Филиппины' } },
+        { value: 'PL', label: { en: 'Poland', pl: 'Polska', ru: 'Польша' } },
+        { value: 'PT', label: { en: 'Portugal', pl: 'Portugalia', ru: 'Португалия' } },
+        { value: 'QA', label: { en: 'Qatar', pl: 'Katar', ru: 'Катар' } },
+        { value: 'RO', label: { en: 'Romania', pl: 'Rumunia', ru: 'Румыния' } },
+        { value: 'RU', label: { en: 'Russia', pl: 'Rosja', ru: 'Россия' } },
+        { value: 'RW', label: { en: 'Rwanda', pl: 'Rwanda', ru: 'Руанда' } },
+        { value: 'KN', label: { en: 'Saint Kitts and Nevis', pl: 'Saint Kitts i Nevis', ru: 'Сент-Китс и Невис' } },
+        { value: 'LC', label: { en: 'Saint Lucia', pl: 'Saint Lucia', ru: 'Сент-Люсия' } },
+        { value: 'VC', label: { en: 'Saint Vincent and the Grenadines', pl: 'Saint Vincent i Grenadyny', ru: 'Сент-Винсент и Гренадины' } },
+        { value: 'WS', label: { en: 'Samoa', pl: 'Samoa', ru: 'Самоа' } },
+        { value: 'SM', label: { en: 'San Marino', pl: 'San Marino', ru: 'Сан-Марино' } },
+        { value: 'ST', label: { en: 'São Tomé and Príncipe', pl: 'Wyspy Świętego Tomasza i Książęca', ru: 'Сан-Томе и Принсипи' } },
+        { value: 'SA', label: { en: 'Saudi Arabia', pl: 'Arabia Saudyjska', ru: 'Саудовская Аравия' } },
+        { value: 'SN', label: { en: 'Senegal', pl: 'Senegal', ru: 'Сенегал' } },
+        { value: 'RS', label: { en: 'Serbia', pl: 'Serbia', ru: 'Сербия' } },
+        { value: 'SC', label: { en: 'Seychelles', pl: 'Seszele', ru: 'Сейшелы' } },
+        { value: 'SL', label: { en: 'Sierra Leone', pl: 'Sierra Leone', ru: 'Сьерра-Леоне' } },
+        { value: 'SG', label: { en: 'Singapore', pl: 'Singapur', ru: 'Сингапур' } },
+        { value: 'SK', label: { en: 'Slovakia', pl: 'Słowacja', ru: 'Словакия' } },
+        { value: 'SI', label: { en: 'Slovenia', pl: 'Słowenia', ru: 'Словения' } },
+        { value: 'SB', label: { en: 'Solomon Islands', pl: 'Wyspy Salomona', ru: 'Соломоновы Острова' } },
+        { value: 'SO', label: { en: 'Somalia', pl: 'Somalia', ru: 'Сомали' } },
+        { value: 'ZA', label: { en: 'South Africa', pl: 'Republika Południowej Afryki', ru: 'Южная Африка' } },
+        { value: 'SS', label: { en: 'South Sudan', pl: 'Sudan Południowy', ru: 'Южный Судан' } },
+        { value: 'ES', label: { en: 'Spain', pl: 'Hiszpania', ru: 'Испания' } },
+        { value: 'LK', label: { en: 'Sri Lanka', pl: 'Sri Lanka', ru: 'Шри-Ланка' } },
+        { value: 'SD', label: { en: 'Sudan', pl: 'Sudan', ru: 'Судан' } },
+        { value: 'SR', label: { en: 'Suriname', pl: 'Surinam', ru: 'Суринам' } },
+        { value: 'SE', label: { en: 'Sweden', pl: 'Szwecja', ru: 'Швеция' } },
+        { value: 'CH', label: { en: 'Switzerland', pl: 'Szwajcaria', ru: 'Швейцария' } },
+        { value: 'SY', label: { en: 'Syria', pl: 'Syria', ru: 'Сирия' } },
+        { value: 'TW', label: { en: 'Taiwan', pl: 'Tajwan', ru: 'Тайвань' } },
+        { value: 'TJ', label: { en: 'Tajikistan', pl: 'Tadżykistan', ru: 'Таджикистан' } },
+        { value: 'TZ', label: { en: 'Tanzania', pl: 'Tanzania', ru: 'Танзания' } },
+        { value: 'TH', label: { en: 'Thailand', pl: 'Tajlandia', ru: 'Таиланд' } },
+        { value: 'TL', label: { en: 'Timor-Leste', pl: 'Timor Wschodni', ru: 'Восточный Тимор' } },
+        { value: 'TG', label: { en: 'Togo', pl: 'Togo', ru: 'Того' } },
+        { value: 'TO', label: { en: 'Tonga', pl: 'Tonga', ru: 'Тонга' } },
+        { value: 'TT', label: { en: 'Trinidad and Tobago', pl: 'Trynidad i Tobago', ru: 'Тринидад и Тобаго' } },
+        { value: 'TN', label: { en: 'Tunisia', pl: 'Tunezja', ru: 'Тунис' } },
+        { value: 'TR', label: { en: 'Turkey', pl: 'Turcja', ru: 'Турция' } },
+        { value: 'TM', label: { en: 'Turkmenistan', pl: 'Turkmenistan', ru: 'Туркменистан' } },
+        { value: 'TV', label: { en: 'Tuvalu', pl: 'Tuvalu', ru: 'Тувалу' } },
+        { value: 'UG', label: { en: 'Uganda', pl: 'Uganda', ru: 'Уганда' } },
+        { value: 'UA', label: { en: 'Ukraine', pl: 'Ukraina', ru: 'Украина' } },
+        { value: 'AE', label: { en: 'United Arab Emirates', pl: 'Zjednoczone Emiraty Arabskie', ru: 'ОАЭ' } },
+        { value: 'GB', label: { en: 'United Kingdom', pl: 'Wielka Brytania', ru: 'Великобритания' } },
+        { value: 'US', label: { en: 'United States', pl: 'Stany Zjednoczone', ru: 'США' } },
+        { value: 'UY', label: { en: 'Uruguay', pl: 'Urugwaj', ru: 'Уругвай' } },
+        { value: 'UZ', label: { en: 'Uzbekistan', pl: 'Uzbekistan', ru: 'Узбекистан' } },
+        { value: 'VU', label: { en: 'Vanuatu', pl: 'Vanuatu', ru: 'Вануату' } },
+        { value: 'VE', label: { en: 'Venezuela', pl: 'Wenezuela', ru: 'Венесуэла' } },
+        { value: 'VN', label: { en: 'Vietnam', pl: 'Wietnam', ru: 'Вьетнам' } },
+        { value: 'YE', label: { en: 'Yemen', pl: 'Jemen', ru: 'Йемен' } },
+        { value: 'ZM', label: { en: 'Zambia', pl: 'Zambia', ru: 'Замбия' } },
+        { value: 'ZW', label: { en: 'Zimbabwe', pl: 'Zimbabwe', ru: 'Зимбабве' } },
+      ]
+    },
+    {
+      id: 'currentStatus', type: 'choice',
+      question: { en: 'What is your current legal basis for staying in Poland?', pl: 'Na jakiej podstawie przebywasz teraz w Polsce?', ru: 'На каком основании вы сейчас находитесь в Польше?' },
+      purpose: { en: 'Determines your current legal status and which application path applies to you.', pl: 'Określa Twój aktualny status prawny i ścieżkę aplikacyjną.', ru: 'Определяет ваш текущий правовой статус и применимый путь подачи.' },
+      showWhen: () => true,
+      options: [
+        { value: 'student_visa', label: { en: 'Student visa', pl: 'Wiza studencka', ru: 'Студенческая виза' } },
+        { value: 'work_visa', label: { en: 'Work visa', pl: 'Wiza pracownicza', ru: 'Рабочая виза' } },
+        { value: 'other_visa', label: { en: 'Other visa', pl: 'Inna wiza', ru: 'Другая виза' } },
+        { value: 'trc_study', label: { en: 'TRC – Study (Karta Pobytu – uczelnia)', pl: 'Karta Pobytu – nauka', ru: 'КВП – учёба' } },
+        { value: 'trc_work', label: { en: 'TRC – Work (Karta Pobytu – praca)', pl: 'Karta Pobytu – praca', ru: 'КВП – работа' } },
+        { value: 'trc_other', label: { en: 'TRC – Other circumstances', pl: 'Karta Pobytu – inne okoliczności', ru: 'КВП – иные обстоятельства' } },
+        { value: 'ukr_status', label: { en: 'UKR Protection Status (Ochrona czasowa)', pl: 'Status UKR (Ochrona czasowa)', ru: 'Статус UKR (временная защита)' } },
+        { value: 'visa_free', label: { en: 'Visa-free / biometric', pl: 'Bezwizowo / biometrycznie', ru: 'Безвизово / биометрический паспорт' } },
+        { value: 'other', label: { en: 'Other / not sure', pl: 'Inne / nie wiem', ru: 'Другое / не уверен(а)' } },
+      ]
+    },
+    {
+      id: 'targetBasis', type: 'choice',
+      question: { en: 'On what basis do you want to apply for a residence card?', pl: 'Na jakiej podstawie chcesz złożyć wniosek o kartę pobytu?', ru: 'На каком основании вы хотите подать заявление на карту побыта?' },
+      purpose: { en: 'This determines your case type and the complete list of documents you will need.', pl: 'Określa typ sprawy i pełną listę wymaganych dokumentów.', ru: 'Это определяет тип вашего дела и полный список необходимых документов.' },
+      showWhen: () => true,
+      options: [
+        { value: 'study', label: { en: 'Study (Uczelnia / Szkoła)', pl: 'Nauka (Uczelnia / Szkoła)', ru: 'Учёба (университет / школа)' } },
+        { value: 'work', label: { en: 'Work (Praca)', pl: 'Praca', ru: 'Работа' } },
+        { value: 'family', label: { en: 'Family reunification (Łączenie rodzin)', pl: 'Łączenie rodzin', ru: 'Воссоединение семьи' } },
+        { value: 'other_circumstances', label: { en: 'Other circumstances', pl: 'Inne okoliczności', ru: 'Иные обстоятельства' } },
+        { value: 'business', label: { en: 'Business (Działalność gospodarcza)', pl: 'Działalność gospodarcza', ru: 'Предпринимательская деятельность' } },
+      ]
+    },
+    {
+      id: 'studyType', type: 'choice',
+      question: { en: 'What type of educational institution do you attend?', pl: 'Jaki typ uczelni / szkoły?', ru: 'Какой тип учебного заведения?' },
+      purpose: { en: 'The institution type affects which documents you need from your school.', pl: 'Typ placówki wpływa na wymagane dokumenty ze szkoły.', ru: 'Тип учебного заведения влияет на необходимые документы.' },
+      showWhen: () => answers.targetBasis === 'study',
+      options: [
+        { value: 'university', label: { en: 'University (Uczelnia wyższa)', pl: 'Uczelnia wyższa', ru: 'Университет' } },
+        { value: 'postsecondary', label: { en: 'Post-secondary school (Szkoła policealna)', pl: 'Szkoła policealna', ru: 'Полицеальная школа' } },
+        { value: 'language', label: { en: 'Language course (Kurs językowy)', pl: 'Kurs językowy', ru: 'Языковые курсы' } },
+        { value: 'other_course', label: { en: 'Other course', pl: 'Inny kurs', ru: 'Другие курсы' } },
+      ]
+    },
+    {
+      id: 'studyContinue', type: 'choice',
+      question: { en: 'Are you continuing your studies or starting a new programme?', pl: 'Czy kontynuujesz studia, czy zaczynasz nowy program?', ru: 'Вы продолжаете учёбу или начинаете новую программу?' },
+      purpose: { en: 'Determines whether this is a renewal (extension) or a new application.', pl: 'Czy to przedłużenie czy nowy wniosek.', ru: 'Определяет, является ли это продлением или новой заявкой.' },
+      showWhen: () => answers.currentStatus === 'trc_study' && answers.targetBasis === 'study',
+      options: [
+        { value: 'continuing', label: { en: 'Continuing studies (same programme)', pl: 'Kontynuuję studia (ten sam program)', ru: 'Продолжаю обучение (та же программа)' } },
+        { value: 'new_programme', label: { en: 'Starting a new programme', pl: 'Zaczynam nowy program', ru: 'Начинаю новую программу' } },
+      ]
+    },
+    {
+      id: 'hasGraduated', type: 'choice',
+      question: { en: 'Have you already graduated from your studies in Poland?', pl: 'Czy ukończyłeś już studia w Polsce?', ru: 'Вы уже окончили учёбу в Польше?' },
+      purpose: { en: 'If you have graduated, you may be eligible for a graduate job-search permit (Article 144) — we will present your options before deciding.', pl: 'Jeśli ukończyłeś studia, możesz być uprawniony do zezwolenia dla absolwentów (Art. 144).', ru: 'Если вы окончили учёбу, вы можете иметь право на разрешение для выпускников (ст. 144).' },
+      showWhen: () => answers.targetBasis === 'work' && (answers.currentStatus === 'trc_study' || answers.currentStatus === 'student_visa' || answers.currentStatus === 'other_visa'),
+      options: [
+        { value: 'yes', label: { en: 'Yes, I have my diploma / I have graduated', pl: 'Tak, ukończyłem/am studia', ru: 'Да, я окончил(а) учёбу' } },
+        { value: 'no', label: { en: 'No, I am still enrolled / studying', pl: 'Nie, jeszcze studiuję', ru: 'Нет, я ещё учусь' } },
+      ]
+    },
+    {
+      id: 'graduateChoice', type: 'graduate_decision',
+      question: { en: 'You have two options available as a graduate. Which would you like to proceed with?', pl: 'Jako absolwent masz dwie dostępne opcje. Którą chcesz wybrać?', ru: 'Как выпускник у вас два варианта. Какой вы хотите выбрать?' },
+      purpose: { en: 'Your choice here determines your case type and the full set of required documents.', pl: 'Twój wybór określa typ sprawy i wymagane dokumenty.', ru: 'Ваш выбор определяет тип дела и список необходимых документов.' },
+      showWhen: () => answers.hasGraduated === 'yes',
+      options: [
+        {
+          value: 'CT-03',
+          label: { en: 'Option 1 — Apply as a graduate (job search, Article 144)', pl: 'Opcja 1 — Wniosek jako absolwent (poszukiwanie pracy, Art. 144)', ru: 'Вариант 1 — Заявление как выпускник (поиск работы, Ст. 144)' },
+          description: { en: 'Stay in Poland up to 1 year while actively searching for employment in your field of study. You do not need an employer yet — your diploma is the key document.', pl: 'Pozostań w Polsce do 1 roku aktywnie szukając pracy. Nie potrzebujesz pracodawcy — kluczowy dokument to dyplom.', ru: 'Оставайтесь в Польше до 1 года в поисках работы по специальности. Работодатель не нужен — ключевой документ — диплом.' }
+        },
+        {
+          value: 'CT-04',
+          label: { en: 'Option 2 — Apply based on employment (Work TRC)', pl: 'Opcja 2 — Wniosek na podstawie zatrudnienia (Karta Pobytu – praca)', ru: 'Вариант 2 — Заявление на основании трудоустройства (КВП – работа)' },
+          description: { en: 'Apply for a work-based residence card. You must already have a signed employment contract. This gives a longer-term permit tied to your employment.', pl: 'Złóż wniosek o kartę pobytową na podstawie pracy. Musisz mieć podpisaną umowę. Daje to długoterminowe zezwolenie powiązane z pracą.', ru: 'Подайте заявление на КВП на основании работы. Нужен подписанный трудовой договор. Это долгосрочное разрешение, привязанное к работе.' }
+        }
+      ]
+    },
+    {
+      id: 'hasEmployer', type: 'choice',
+      question: { en: 'Do you currently have an employer in Poland?', pl: 'Czy masz teraz pracodawcę w Polsce?', ru: 'Есть ли у вас сейчас работодатель в Польше?' },
+      purpose: { en: 'You need an active employer to apply on a work basis.', pl: 'Do wniosku na podstawie pracy potrzebujesz aktywnego pracodawcy.', ru: 'Для подачи на основании работы вам нужен действующий работодатель.' },
+      showWhen: () => answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      options: [
+        { value: 'yes', label: { en: 'Yes, I have an employer', pl: 'Tak, mam pracodawcę', ru: 'Да, у меня есть работодатель' } },
+        { value: 'no', label: { en: 'No employer yet', pl: 'Nie, nie mam pracodawcy', ru: 'Нет работодателя' } },
+      ]
+    },
+    {
+      id: 'changedEmployer', type: 'choice',
+      question: { en: 'Did you change your employer during your previous work residence card?', pl: 'Czy zmieniałeś pracodawcę w trakcie poprzedniej karty pobytowej?', ru: 'Меняли ли вы работодателя в период действия предыдущей карты?' },
+      purpose: { en: 'Changing employer during TRC validity has legal implications that may affect your case type.', pl: 'Zmiana pracodawcy w trakcie ważności karty ma implikacje prawne.', ru: 'Смена работодателя в период действия КВП имеет юридические последствия.' },
+      showWhen: () => answers.currentStatus === 'trc_work' && answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      options: [
+        { value: 'yes', label: { en: 'Yes, I changed employer', pl: 'Tak, zmieniłem/am pracodawcę', ru: 'Да, я сменил(а) работодателя' } },
+        { value: 'no', label: { en: 'No, same employer throughout', pl: 'Nie, ten sam pracodawca', ru: 'Нет, тот же работодатель' } },
+      ]
+    },
+    {
+      id: 'notifiedVoivode', type: 'choice',
+      question: { en: 'Did you inform the Voivode (Urząd Wojewódzki) about the employer change?', pl: 'Czy poinformowałeś Urząd Wojewódzki o zmianie pracodawcy?', ru: 'Сообщали ли вы Воеводе об изменении работодателя?' },
+      purpose: { en: 'Failing to notify the Voivode about an employer change may complicate your case and affect which procedure applies.', pl: 'Brak powiadomienia może skomplikować sprawę.', ru: 'Отсутствие уведомления может осложнить дело.' },
+      showWhen: () => answers.changedEmployer === 'yes',
+      options: [
+        { value: 'yes', label: { en: 'Yes, I notified the Voivode', pl: 'Tak, powiadomiłem/am Urząd', ru: 'Да, я уведомил(а) Воеводу' } },
+        { value: 'no', label: { en: 'No, I did not notify', pl: 'Nie, nie powiadomiłem/am', ru: 'Нет, не уведомлял(а)' } },
+        { value: 'not_sure', label: { en: 'Not sure', pl: 'Nie jestem pewny/a', ru: 'Не уверен(а)' } },
+      ]
+    },
+    {
+      id: 'employerInDecyzja', type: 'choice',
+      question: { en: 'Is a specific employer listed in your current residence decision (decyzja)?', pl: 'Czy w Twojej decyzji pobytowej jest wymieniony konkretny pracodawca?', ru: 'Указан ли конкретный работодатель в вашем решении о пребывании (decyzja)?' },
+      purpose: { en: 'If your employer is named in the decyzja, changing jobs requires a change-of-decision application — a different procedure from a standard renewal.', pl: 'Jeśli pracodawca jest w decyzji, zmiana pracy wymaga wniosku o zmianę decyzji.', ru: 'Если работодатель указан в решении, смена работы требует заявления об изменении решения.' },
+      showWhen: () => answers.currentStatus === 'trc_work' && answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      options: [
+        { value: 'yes', label: { en: 'Yes, employer is listed in the decyzja', pl: 'Tak, pracodawca jest wskazany w decyzji', ru: 'Да, работодатель указан в решении' } },
+        { value: 'no', label: { en: 'No, no specific employer listed', pl: 'Nie, pracodawca nie jest wskazany', ru: 'Нет, конкретный работодатель не указан' } },
+        { value: 'not_sure', label: { en: 'Not sure — I need to check', pl: 'Nie wiem — muszę sprawdzić', ru: 'Не уверен(а) — нужно проверить' } },
+      ]
+    },
+    {
+      id: 'familyMember', type: 'choice',
+      question: { en: 'Who are you joining in Poland?', pl: 'Do kogo dołączasz w Polsce?', ru: 'К кому вы присоединяетесь в Польше?' },
+      purpose: { en: 'The relationship to the main applicant (sponsor) determines required supporting documents.', pl: 'Relacja z głównym wnioskodawcą wpływa na wymagane dokumenty.', ru: 'Отношения с основным заявителем определяют необходимые документы.' },
+      showWhen: () => answers.targetBasis === 'family',
+      options: [
+        { value: 'spouse', label: { en: 'Spouse / partner', pl: 'Małżonek / partner', ru: 'Супруг(а) / партнёр' } },
+        { value: 'parent', label: { en: 'Parent', pl: 'Rodzic', ru: 'Родитель' } },
+        { value: 'child', label: { en: 'Child', pl: 'Dziecko', ru: 'Ребёнок' } },
+      ]
+    },
+    {
+      id: 'sponsorTrcDuration', type: 'choice',
+      question: { en: 'Does your family member (sponsor) in Poland already hold a residence card for more than 2 years?', pl: 'Czy Twój główny wnioskodawca ma kartę pobytu od ponad 2 lat?', ru: 'Имеет ли основной заявитель карту пребывания более 2 лет?' },
+      purpose: { en: 'This affects your eligibility and the type of family reunification application.', pl: 'Wpływa na kwalifikowalność i typ wniosku.', ru: 'Это влияет на ваше право на воссоединение семьи.' },
+      showWhen: () => answers.familyMember === 'spouse',
+      options: [
+        { value: 'yes', label: { en: 'Yes, more than 2 years', pl: 'Tak, ponad 2 lata', ru: 'Да, более 2 лет' } },
+        { value: 'no', label: { en: 'No, less than 2 years', pl: 'Nie, mniej niż 2 lata', ru: 'Нет, менее 2 лет' } },
+      ]
+    },
+  ];
+}
+
+// ─── CASE ASSIGNMENT ────────────────────────────────────────────────────────
+function assignCase() {
+  const cs = answers.currentStatus;
+  const tb = answers.targetBasis;
+
+  if (tb === 'family') return 'CT-08';
+  if (tb === 'other_circumstances' || tb === 'business') return 'CT-09';
+
+  // Graduate explicit choice
+  if (answers.graduateChoice === 'CT-03') return 'CT-03';
+  if (answers.graduateChoice === 'CT-04') return 'CT-04';
+
+  if (tb === 'study') {
+    if (cs === 'trc_study') return 'CT-02';
+    return 'CT-01';
+  }
+
+  if (tb === 'work') {
+    if (cs === 'trc_study') return 'CT-04';
+    if (cs === 'trc_work') {
+      if (answers.changedEmployer === 'yes' && answers.employerInDecyzja === 'yes') return 'CT-07';
+      return 'CT-06';
+    }
+    return 'CT-05';
+  }
+
+  return 'CT-09';
+}
+
+function getCaseName(id) {
+  const n = {
+    'CT-01': { en: 'Study Visa → Study TRC', pl: 'Wiza studencka → Karta Pobytu (nauka)', ru: 'Студенческая виза → КВП (учёба)' },
+    'CT-02': { en: 'Study TRC → Study TRC (Renewal)', pl: 'KP (nauka) → KP (nauka) – przedłużenie', ru: 'КВП (учёба) → КВП (учёба) — продление' },
+    'CT-03': { en: 'Graduate Job Search TRC (Art. 144)', pl: 'Karta Pobytu dla Absolwentów (Art. 144)', ru: 'КВП для выпускников (Ст. 144)' },
+    'CT-04': { en: 'Study TRC → Work TRC', pl: 'Karta Pobytu (nauka) → Karta Pobytu (praca)', ru: 'КВП (учёба) → КВП (работа)' },
+    'CT-05': { en: 'Work Visa → Work TRC', pl: 'Wiza pracownicza → Karta Pobytu (praca)', ru: 'Рабочая виза → КВП (работа)' },
+    'CT-06': { en: 'Work TRC → Work TRC (Renewal)', pl: 'KP (praca) → KP (praca) – przedłużenie', ru: 'КВП (работа) → КВП (работа) — продление' },
+    'CT-07': { en: 'Change of Work Decision (Zmiana Decyzji)', pl: 'Zmiana Decyzji Pobytowej', ru: 'Изменение решения о пребывании' },
+    'CT-08': { en: 'Family Reunification TRC', pl: 'Karta Pobytu – Łączenie Rodzin', ru: 'КВП — воссоединение семьи' },
+    'CT-09': { en: 'Other Circumstances TRC', pl: 'Karta Pobytu – Inne Okoliczności', ru: 'КВП — иные обстоятельства' },
+  };
+  return n[id] || { en: id, pl: id, ru: id };
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function activeQuestions() {
+  return getQuestions().filter(q => q.showWhen());
+}
+
+function setProgress(pct, stepNum, total) {
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = Math.round(pct) + '%';
+  if (stepNum && total) {
+    document.getElementById('progressStepText').textContent = tx('stepLabel') + ' ' + stepNum + ' ' + tx('of') + ' ' + total;
+  }
+}
+
+function render() {
+  const c = document.getElementById('appContainer');
+  c.innerHTML = '';
+  const questions = activeQuestions();
+
+  if (currentStep < questions.length) {
+    const q = questions[currentStep];
+    const total = questions.length;
+    const pct = (currentStep / total) * 85;
+    setProgress(pct, currentStep + 1, total);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // Step label
+    const stepLbl = document.createElement('div');
+    stepLbl.className = 'step-label';
+    stepLbl.textContent = tx('stepLabel') + ' ' + (currentStep + 1) + ' ' + tx('of') + ' ' + total;
+    card.appendChild(stepLbl);
+
+    // Decision banner
+    if (q.type === 'graduate_decision') {
+      const banner = document.createElement('div');
+      banner.className = 'decision-banner';
+      banner.textContent = '⚡ ' + tx('decisionPoint');
+      card.appendChild(banner);
+    }
+
+    // Question title
+    const title = document.createElement('div');
+    title.className = 'question-title';
+    title.textContent = tObj(q.question);
+    card.appendChild(title);
+
+    // Purpose
+    const purpose = document.createElement('div');
+    purpose.className = 'question-purpose';
+    purpose.textContent = '💡 ' + tx('purposeLabel') + ': ' + tObj(q.purpose);
+    card.appendChild(purpose);
+
+    // Options container
+    const grid = document.createElement('div');
+    grid.className = 'options-grid';
+    card.appendChild(grid);
+
+    // Render by type
+    if (q.type === 'choice') {
+      renderChoiceOptions(q, grid);
+    } else if (q.type === 'select') {
+      renderCountrySearch(q, grid);
+    } else if (q.type === 'graduate_decision') {
+      renderGraduateDecision(q, grid);
+    }
+
+    // Nav
+    const nav = document.createElement('div');
+    nav.className = 'nav-row';
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn btn-ghost';
+    backBtn.textContent = tx('backBtn');
+    backBtn.onclick = goBack;
+    if (currentStep === 0) { backBtn.style.display = 'none'; }
+    nav.appendChild(backBtn);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn btn-primary';
+    nextBtn.id = 'continueBtn';
+    nextBtn.textContent = tx('nextBtn') + ' →';
+    nextBtn.disabled = !answers[q.id];
+    nextBtn.onclick = goNext;
+    nav.appendChild(nextBtn);
+    card.appendChild(nav);
+
+    c.appendChild(card);
+
+  } else {
+    // Results
+    setProgress(100);
+    const caseId = assignCase();
+    renderResults(c, caseId);
+  }
+}
+
+function renderChoiceOptions(q, grid) {
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (answers[q.id] === opt.value ? ' selected' : '');
+
+    const dot = document.createElement('span');
+    dot.className = 'option-indicator';
+    btn.appendChild(dot);
+
+    const lbl = document.createElement('span');
+    lbl.textContent = tObj(opt.label);
+    btn.appendChild(lbl);
+
+    btn.onclick = () => {
+      answers[q.id] = opt.value;
+      if (q.id === 'currentStatus' || q.id === 'targetBasis') {
+        ['studyType','studyContinue','hasEmployer','hasGraduated','graduateChoice',
+         'changedEmployer','notifiedVoivode','employerInDecyzja','familyMember','sponsorTrcDuration'
+        ].forEach(k => delete answers[k]);
+      }
+      render();
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function renderCountrySearch(q, grid) {
+  const wrap = document.createElement('div');
+  wrap.className = 'country-search-wrap';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'country-input';
+  input.placeholder = tx('searchPlaceholder');
+  input.autocomplete = 'off';
+
+  if (answers[q.id]) {
+    const found = q.options.find(o => o.value === answers[q.id]);
+    if (found) input.value = tObj(found.label);
+  }
+
+  const dd = document.createElement('div');
+  dd.className = 'country-dropdown';
+
+  function populate(filter) {
+    dd.innerHTML = '';
+    const filtered = q.options.filter(o => tObj(o.label).toLowerCase().includes(filter.toLowerCase()));
+    if (!filtered.length) {
+      const msg = document.createElement('div');
+      msg.className = 'country-no-results';
+      msg.textContent = tx('noResults');
+      dd.appendChild(msg);
+    } else {
+      filtered.forEach(opt => {
+        const item = document.createElement('div');
+        item.className = 'country-option' + (answers[q.id] === opt.value ? ' active' : '');
+        item.textContent = tObj(opt.label);
+        item.onmousedown = (e) => {
+          e.preventDefault();
+          answers[q.id] = opt.value;
+          input.value = tObj(opt.label);
+          dd.style.display = 'none';
+          const cb = document.getElementById('continueBtn');
+          if (cb) cb.disabled = false;
+        };
+        dd.appendChild(item);
+      });
+    }
+    dd.style.display = 'block';
+  }
+
+  input.oninput = () => populate(input.value);
+  input.onfocus = () => populate(input.value);
+  input.onblur = () => setTimeout(() => { dd.style.display = 'none'; }, 200);
+
+  wrap.appendChild(input);
+  wrap.appendChild(dd);
+  grid.appendChild(wrap);
+}
+
+function renderGraduateDecision(q, grid) {
+  q.options.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = 'grad-card' + (answers[q.id] === opt.value ? ' selected' : '');
+
+    const header = document.createElement('div');
+    header.className = 'grad-card-header';
+
+    const dot = document.createElement('div');
+    dot.className = 'grad-card-dot';
+    header.appendChild(dot);
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'grad-card-title';
+    titleEl.textContent = tObj(opt.label);
+    header.appendChild(titleEl);
+    card.appendChild(header);
+
+    const desc = document.createElement('div');
+    desc.className = 'grad-card-desc';
+    desc.textContent = tObj(opt.description);
+    card.appendChild(desc);
+
+    card.onclick = () => {
+      answers[q.id] = opt.value;
+      const cb = document.getElementById('continueBtn');
+      if (cb) cb.disabled = false;
+      render();
+    };
+    grid.appendChild(card);
+  });
+}
+
+function renderResults(c, caseId) {
+  const caseName = getCaseName(caseId);
+  const explanation = T.caseExplanations[caseId] || {};
+  const qs = getQuestions();
+  const currentStatusLabel = qs.find(q => q.id === 'currentStatus')?.options?.find(o => o.value === answers.currentStatus)?.label;
+  const targetLabel = qs.find(q => q.id === 'targetBasis')?.options?.find(o => o.value === answers.targetBasis)?.label;
+
+  // Case result card
+  const resultCard = document.createElement('div');
+  resultCard.className = 'case-result';
+
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'case-result-eyebrow';
+  eyebrow.textContent = caseId + ' — ' + tx('caseAssigned');
+  resultCard.appendChild(eyebrow);
+
+  const name = document.createElement('div');
+  name.className = 'case-result-name';
+  name.textContent = tObj(caseName);
+  resultCard.appendChild(name);
+
+  if (explanation[lang] || explanation.en) {
+    const exp = document.createElement('div');
+    exp.className = 'case-result-explanation';
+    exp.textContent = tObj(explanation);
+    resultCard.appendChild(exp);
+  }
+
+  const route = document.createElement('div');
+  route.className = 'case-route';
+  route.innerHTML = '<span class="route-chip current">' + (currentStatusLabel ? tObj(currentStatusLabel) : answers.currentStatus || '—') + '</span>' +
+    '<span class="route-arrow">→</span>' +
+    '<span class="route-chip target">' + (targetLabel ? tObj(targetLabel) : answers.targetBasis || '—') + '</span>';
+  resultCard.appendChild(route);
+
+  if (caseId === 'CT-07') {
+    const warn = document.createElement('div');
+    warn.className = 'warning-card';
+    warn.innerHTML = '<strong>⚠ Note:</strong> You have been assigned to <strong>Change of Work Decision</strong> because you changed your employer while they were named in your existing residence decision. The stamp duty for this procedure is <strong>220 PLN</strong> (not 340 PLN). Please consult your advisor about the notification obligation.';
+    resultCard.appendChild(warn);
+  }
+
+  c.appendChild(resultCard);
+
+  // Documents section
+  const docs = DOCUMENT_MATRIX[caseId] || [];
+  const mandatory = docs.filter(d => d.condition === 'ALWAYS');
+  const conditional = docs.filter(d => d.condition !== 'ALWAYS' && d.condition !== 'IF_AVAILABLE');
+  const optional = docs.filter(d => d.condition === 'IF_AVAILABLE');
+
+  const divider = document.createElement('div');
+  divider.className = 'section-divider';
+  divider.innerHTML = '<div class="section-line"></div><div class="section-label">📄 ' + tx('documentsTitle') + '</div><div class="section-line"></div>';
+  c.appendChild(divider);
+
+  const sub = document.createElement('div');
+  sub.style.cssText = 'font-size:13px;color:var(--text-2);margin-bottom:24px;line-height:1.6;padding:0 12px;';
+  sub.textContent = tx('documentsSubtitle');
+  c.appendChild(sub);
+
+  function renderDocGroup(docList, groupLabel) {
+    if (!docList.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'doc-item-wrap';
+    const groupTitle = document.createElement('div');
+    groupTitle.className = 'doc-group-title';
+    groupTitle.textContent = groupLabel;
+    wrap.appendChild(groupTitle);
+    docList.forEach(doc => {
+      const cond = CONDITIONS[doc.condition] || CONDITIONS.ALWAYS;
+      const item = document.createElement('div');
+      item.className = 'doc-item';
+
+      const dot = document.createElement('div');
+      dot.className = 'doc-dot ' + cond.dotCls;
+      item.appendChild(dot);
+
+      const body = document.createElement('div');
+      body.className = 'doc-body';
+
+      const nameEn = document.createElement('div');
+      nameEn.className = 'doc-name-en';
+      nameEn.textContent = doc.en;
+      body.appendChild(nameEn);
+
+      const namePl = document.createElement('div');
+      namePl.className = 'doc-name-pl';
+      namePl.textContent = '🇵🇱 ' + doc.pl;
+      body.appendChild(namePl);
+
+      const nameRu = document.createElement('div');
+      nameRu.className = 'doc-name-ru';
+      nameRu.textContent = '🇷🇺 ' + doc.ru;
+      body.appendChild(nameRu);
+
+      const tags = document.createElement('div');
+      tags.className = 'doc-tags';
+
+      const condTag = document.createElement('span');
+      condTag.className = 'doc-tag ' + cond.cls;
+      condTag.textContent = cond[lang] || cond.en;
+      tags.appendChild(condTag);
+
+      const srcTag = document.createElement('span');
+      srcTag.className = 'doc-tag tag-source';
+      srcTag.textContent = '📋 ' + doc.source;
+      tags.appendChild(srcTag);
+
+      body.appendChild(tags);
+
+      if (doc.notes) {
+        const notes = document.createElement('div');
+        notes.className = 'doc-notes';
+        notes.textContent = 'ℹ ' + doc.notes;
+        body.appendChild(notes);
+      }
+
+      item.appendChild(body);
+      wrap.appendChild(item);
+    });
+    c.appendChild(wrap);
+  }
+
+  renderDocGroup(mandatory, tx('alwaysGroup'));
+  renderDocGroup(conditional, tx('conditionalGroup'));
+  renderDocGroup(optional, tx('optionalGroup'));
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'reset-btn';
+  resetBtn.textContent = '↺ ' + tx('startOver');
+  resetBtn.onclick = resetAll;
+  c.appendChild(resetBtn);
+}
+
+function goNext() {
+  const questions = activeQuestions();
+  const q = questions[currentStep];
+  if (!answers[q.id]) return;
+  if (currentStep < questions.length - 1) {
+    currentStep++;
+  } else {
+    currentStep = questions.length;
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (currentStep > 0) {
+    currentStep--;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function resetAll() {
+  answers = {};
+  currentStep = 0;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === l.toUpperCase());
+  });
+  render();
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
