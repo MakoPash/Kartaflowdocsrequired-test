@@ -1716,11 +1716,28 @@ function renderResults(c, caseId) {
   renderDocGroup(conditional, tx('conditionalGroup'));
   renderDocGroup(optional, tx('optionalGroup'));
 
+  const btnRow = document.createElement('div');
+  btnRow.style.cssText = 'display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;';
+
+  const backBtn = document.createElement('button');
+  backBtn.className = 'btn btn-ghost';
+  backBtn.style.cssText = 'flex:1;min-width:140px;';
+  backBtn.textContent = '← ' + tx('backBtn');
+  backBtn.onclick = () => {
+    currentStep = activeQuestions().length - 1;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  btnRow.appendChild(backBtn);
+
   const resetBtn = document.createElement('button');
   resetBtn.className = 'reset-btn';
+  resetBtn.style.cssText = 'flex:1;min-width:140px;margin:0;';
   resetBtn.textContent = '↺ ' + tx('startOver');
   resetBtn.onclick = resetAll;
-  c.appendChild(resetBtn);
+  btnRow.appendChild(resetBtn);
+
+  c.appendChild(btnRow);
 }
 
 function goNext() {
