@@ -8,167 +8,227 @@
 <style>
 :root {
   --red: #E8132A;
-  --red-deep: #B50F20;
-  --red-soft: rgba(232,19,42,0.08);
+  --red-deep: #C01020;
+  --red-soft: rgba(232,19,42,0.07);
+  --red-mid: rgba(232,19,42,0.14);
   --white: #FFFFFF;
-  --off-white: #F8F6F3;
-  --surface: #F2F0ED;
-  --surface-2: #ECEAE7;
-  --border: rgba(0,0,0,0.08);
-  --border-strong: rgba(0,0,0,0.14);
-  --dark: #0D0D0D;
-  --text: #111111;
-  --text-2: #444444;
-  --text-3: #888888;
+  --off-white: #F6F4F1;
+  --surface: #EFECE8;
+  --surface-2: #E6E2DD;
+  --border: rgba(0,0,0,0.055);
+  --border-strong: rgba(0,0,0,0.1);
+  --dark: #0A0A0A;
+  --text: #0F0F0F;
+  --text-2: #3C3C3C;
+  --text-3: #8C8C8C;
   --success: #16A34A;
   --warning: #D97706;
-  --radius: 14px;
-  --radius-sm: 8px;
+  --radius: 20px;
+  --radius-sm: 14px;
   --radius-pill: 100px;
+  --glass-bg: rgba(255,255,255,0.7);
+  --glass-border: rgba(255,255,255,0.55);
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.85) inset, 0 8px 40px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-elevated: 0 1px 0 rgba(255,255,255,0.9) inset, 0 24px 64px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-option: 0 1px 0 rgba(255,255,255,0.8) inset, 0 2px 10px rgba(0,0,0,0.055);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── BODY / BACKGROUND ── */
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--off-white);
   color: var(--text);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* Subtle radial glow in the background */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20vh; left: 50%;
+  transform: translateX(-50%);
+  width: 80vw; height: 60vh;
+  background: radial-gradient(ellipse at center, rgba(232,19,42,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ── HEADER ── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(246,244,241,0.82);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
   height: 64px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 40px;
 }
 .logo {
   font-family: 'Fraunces', serif;
-  font-size: 20px; font-weight: 700;
-  letter-spacing: -0.3px;
+  font-size: 21px; font-weight: 700;
+  letter-spacing: -0.5px;
   cursor: default;
+  display: flex; align-items: baseline; gap: 1px;
 }
 .logo-karta { color: var(--dark); }
 .logo-flow { color: var(--red); }
+.logo-wrap {
+  display: flex; flex-direction: column; gap: 1px;
+}
+.logo-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-left: 1px;
+}
 .lang-switcher {
   display: flex; gap: 2px;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  background: rgba(0,0,0,0.05);
+  border: 0.5px solid var(--border-strong);
   border-radius: var(--radius-pill);
   padding: 3px;
 }
 .lang-btn {
-  padding: 5px 14px;
+  padding: 5px 15px;
   border: none; background: none;
   color: var(--text-3);
   font-family: 'DM Sans', sans-serif;
   font-size: 12px; font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 32px;
 }
 .lang-btn.active {
   background: var(--dark);
   color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
+.lang-btn:not(.active):hover { color: var(--text); }
 
 /* ── LAYOUT ── */
 main {
-  max-width: 680px;
+  max-width: 660px;
   margin: 0 auto;
-  padding: 52px 24px 96px;
+  padding: 48px 24px 100px;
+  position: relative; z-index: 1;
 }
 
 /* ── PROGRESS ── */
 .progress-wrap {
-  margin-bottom: 44px;
+  margin-bottom: 40px;
 }
 @media (max-width: 600px) {
   .progress-wrap {
     position: sticky;
     top: 56px;
     z-index: 50;
-    background: var(--off-white);
-    padding: 12px 16px 10px;
+    background: rgba(246,244,241,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 12px 20px 12px;
     margin-bottom: 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
   }
 }
+/* Pill-shaped progress bar */
 .progress-track {
-  height: 2px;
-  background: var(--border-strong);
-  border-radius: 2px;
+  height: 6px;
+  background: rgba(0,0,0,0.07);
+  border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 .progress-fill {
   height: 100%;
-  background: var(--red);
-  border-radius: 2px;
-  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  background: linear-gradient(90deg, var(--red-deep) 0%, var(--red) 100%);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.34,1.2,0.64,1);
+  position: relative;
+}
+/* Shimmer effect on progress bar */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  animation: shimmer 2.4s ease-in-out infinite;
+  border-radius: 10px;
+}
+@keyframes shimmer {
+  0% { left: -100%; }
+  60%, 100% { left: 100%; }
 }
 .progress-label {
-  display: flex; justify-content: space-between;
-  margin-top: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 9px;
 }
 .progress-text {
   font-size: 11px; font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-3);
 }
 .progress-pct {
-  font-size: 11px; font-weight: 600;
+  font-size: 12px; font-weight: 700;
   color: var(--red);
+  letter-spacing: -0.2px;
 }
 
-/* ── CARD ── */
+/* ── CARD — GLASS/FROSTED ── */
 .card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
   border-radius: var(--radius);
   padding: 36px 40px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
-  animation: fadeUp 0.35s ease both;
+  box-shadow: var(--shadow-card);
+  animation: cardIn 0.4s cubic-bezier(0.34,1.2,0.64,1) both;
 }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ── STEP LABEL ── */
 .step-label {
-  font-size: 11px; font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 /* ── DECISION BANNER ── */
 .decision-banner {
   display: inline-flex; align-items: center; gap: 7px;
   background: rgba(217,119,6,0.08);
-  border: 1px solid rgba(217,119,6,0.25);
-  border-radius: 6px;
-  padding: 6px 12px;
+  border: 0.5px solid rgba(217,119,6,0.22);
+  border-radius: 8px;
+  padding: 6px 14px;
   margin-bottom: 16px;
   font-size: 11px; font-weight: 700;
   color: var(--warning);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
 /* ── QUESTION ── */
 .question-title {
   font-family: 'Fraunces', serif;
-  font-size: 24px; font-weight: 700;
-  line-height: 1.3;
+  font-size: 26px; font-weight: 700;
+  line-height: 1.25;
   color: var(--dark);
   margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 .question-subtitle {
   font-size: 14px; color: var(--text-3);
@@ -178,75 +238,140 @@ main {
 .question-purpose {
   font-size: 13px; color: var(--text-2);
   margin-bottom: 28px;
-  padding: 10px 14px;
-  background: var(--surface);
-  border-radius: var(--radius-sm);
-  border-left: 2px solid var(--border-strong);
-  line-height: 1.5;
+  padding: 11px 16px;
+  background: rgba(0,0,0,0.025);
+  border-radius: 10px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+  line-height: 1.55;
 }
 
 /* ── OPTIONS ── */
 .options-grid {
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 9px;
 }
 .option-btn {
   display: flex; align-items: center; gap: 14px;
-  padding: 14px 18px;
-  background: var(--white);
-  border: 1.5px solid var(--border-strong);
+  padding: 15px 18px;
+  background: rgba(255,255,255,0.7);
+  border: 0.5px solid rgba(0,0,0,0.09);
   border-radius: var(--radius-sm);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px; font-weight: 400;
   cursor: pointer;
   text-align: left;
-  transition: all 0.15s;
+  transition: all 0.22s cubic-bezier(0.34,1.4,0.64,1);
   width: 100%;
+  box-shadow: var(--shadow-option);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
+}
+.option-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.32) 0%, transparent 55%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.option-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  pointer-events: none;
+  border-radius: 1px;
 }
 .option-btn:hover {
-  border-color: var(--red);
-  background: var(--red-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 8px 24px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.13);
+  background: rgba(255,255,255,0.88);
 }
+.option-btn:active { transform: scale(0.99) translateY(0); }
+/* Selected state — dark filled, red accent */
 .option-btn.selected {
-  border-color: var(--red);
-  background: var(--red-soft);
-  color: var(--dark);
+  background: var(--dark);
+  border-color: transparent;
+  color: #fff;
   font-weight: 500;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 2px 8px rgba(232,19,42,0.15);
+  transform: translateY(-1px);
+}
+.option-btn.selected::before {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
 }
 .option-indicator {
-  width: 18px; height: 18px;
+  width: 19px; height: 19px;
   border-radius: 50%;
-  border: 1.5px solid var(--border-strong);
+  border: 1.5px solid rgba(0,0,0,0.15);
   flex-shrink: 0;
-  transition: all 0.15s;
+  transition: all 0.22s cubic-bezier(0.34,1.6,0.64,1);
   position: relative;
+  background: rgba(255,255,255,0.5);
+}
+.option-btn:hover .option-indicator {
+  border-color: rgba(0,0,0,0.3);
 }
 .option-btn.selected .option-indicator {
-  border-color: var(--red);
+  border-color: rgba(255,255,255,0.3);
   background: var(--red);
+  box-shadow: 0 0 0 3px rgba(232,19,42,0.2);
 }
 .option-btn.selected .option-indicator::after {
   content: '';
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 6px; height: 6px;
+  transform: translate(-50%,-50%) scale(1);
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: white;
+  animation: dotPop 0.25s cubic-bezier(0.34,1.8,0.64,1) both;
+}
+@keyframes dotPop {
+  from { transform: translate(-50%,-50%) scale(0); }
+  to   { transform: translate(-50%,-50%) scale(1); }
+}
+
+/* Options animate in staggered */
+.options-grid .option-btn {
+  animation: optionIn 0.35s cubic-bezier(0.34,1.3,0.64,1) both;
+}
+.options-grid .option-btn:nth-child(1) { animation-delay: 0.04s; }
+.options-grid .option-btn:nth-child(2) { animation-delay: 0.09s; }
+.options-grid .option-btn:nth-child(3) { animation-delay: 0.14s; }
+.options-grid .option-btn:nth-child(4) { animation-delay: 0.19s; }
+.options-grid .option-btn:nth-child(5) { animation-delay: 0.24s; }
+.options-grid .option-btn:nth-child(6) { animation-delay: 0.29s; }
+@keyframes optionIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ── GRADUATE DECISION CARDS ── */
 .grad-card {
   padding: 20px 22px;
-  background: var(--white);
-  border: 1.5px solid var(--border-strong);
+  background: rgba(255,255,255,0.7);
+  border: 0.5px solid rgba(0,0,0,0.09);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.22s cubic-bezier(0.34,1.4,0.64,1);
   margin-bottom: 10px;
+  box-shadow: var(--shadow-option);
+  -webkit-tap-highlight-color: transparent;
 }
-.grad-card:hover { border-color: var(--red); background: var(--red-soft); }
-.grad-card.selected { border-color: var(--red); background: var(--red-soft); }
+.grad-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 6px 20px rgba(0,0,0,0.09);
+}
+.grad-card.selected {
+  background: var(--dark);
+  border-color: transparent;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  transform: translateY(-1px);
+}
 .grad-card-header {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 10px;
@@ -254,62 +379,80 @@ main {
 .grad-card-dot {
   width: 20px; height: 20px;
   border-radius: 50%;
-  border: 1.5px solid var(--border-strong);
+  border: 1.5px solid rgba(0,0,0,0.15);
   flex-shrink: 0;
-  transition: all 0.15s;
+  transition: all 0.22s cubic-bezier(0.34,1.6,0.64,1);
   position: relative;
+  background: rgba(255,255,255,0.5);
 }
 .grad-card.selected .grad-card-dot {
   background: var(--red);
-  border-color: var(--red);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 0 3px rgba(232,19,42,0.2);
 }
 .grad-card.selected .grad-card-dot::after {
   content: '';
   position: absolute;
   top:50%;left:50%;
   transform:translate(-50%,-50%);
-  width:6px;height:6px;
+  width:7px;height:7px;
   border-radius:50%;background:white;
+  animation: dotPop 0.25s cubic-bezier(0.34,1.8,0.64,1) both;
 }
 .grad-card-title {
   font-family: 'Fraunces', serif;
   font-size: 15px; font-weight: 700;
   color: var(--dark);
+  transition: color 0.2s;
 }
+.grad-card.selected .grad-card-title { color: #fff; }
 .grad-card-desc {
   font-size: 13px; color: var(--text-2);
   line-height: 1.6;
   padding-left: 32px;
+  transition: color 0.2s;
 }
+.grad-card.selected .grad-card-desc { color: rgba(255,255,255,0.65); }
 
 /* ── COUNTRY SEARCH ── */
 .country-search-wrap { position: relative; }
 .country-input {
   width: 100%;
-  padding: 13px 18px;
-  background: var(--white);
-  border: 1.5px solid var(--border-strong);
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.75);
+  border: 0.5px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-sm);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: 16px !important;
   outline: none;
-  transition: border-color 0.15s;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-option);
 }
-.country-input:focus { border-color: var(--red); }
+.country-input:focus {
+  border-color: rgba(232,19,42,0.4);
+  box-shadow: 0 0 0 3px rgba(232,19,42,0.08), var(--shadow-option);
+  background: rgba(255,255,255,0.9);
+}
 .country-input::placeholder { color: var(--text-3); }
 .country-dropdown {
   position: absolute;
-  top: 100%; left: 0; right: 0;
+  top: calc(100% + 6px); left: 0; right: 0;
   z-index: 200;
-  background: var(--white);
-  border: 1.5px solid var(--red);
-  border-top: none;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  max-height: 220px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius-sm);
+  max-height: 240px;
   overflow-y: auto;
   display: none;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08);
+  animation: dropIn 0.2s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .country-option {
   padding: 11px 18px;
@@ -317,10 +460,12 @@ main {
   font-size: 14px;
   color: var(--text);
   transition: background 0.12s;
+  min-height: 48px;
+  display: flex; align-items: center;
 }
 .country-option:hover, .country-option.active { background: var(--red-soft); }
 .country-no-results {
-  padding: 12px 18px;
+  padding: 14px 18px;
   font-size: 13px;
   color: var(--text-3);
 }
@@ -331,71 +476,110 @@ main {
   justify-content: space-between; align-items: center;
 }
 .btn {
-  padding: 12px 28px;
+  padding: 13px 30px;
   border-radius: var(--radius-pill);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 500;
+  font-size: 14px; font-weight: 600;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.22s cubic-bezier(0.34,1.4,0.64,1);
   border: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 50px;
+  letter-spacing: 0.01em;
 }
 .btn-primary {
   background: var(--red);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(232,19,42,0.2);
+  box-shadow: 0 4px 20px rgba(232,19,42,0.25), 0 1px 0 rgba(255,255,255,0.15) inset;
 }
-.btn-primary:hover { background: var(--red-deep); }
-.btn-primary:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+.btn-primary:hover {
+  background: var(--red-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(232,19,42,0.32), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; transform: none; }
 .btn-ghost {
-  background: transparent;
+  background: rgba(255,255,255,0.55);
+  border: 0.5px solid rgba(0,0,0,0.1);
   color: var(--text-2);
-  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow-option);
 }
-.btn-ghost:hover { border-color: var(--text); color: var(--dark); }
-.btn-outline-red {
-  background: transparent;
-  color: var(--red);
-  border: 1.5px solid var(--red);
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.85);
+  color: var(--text);
+  transform: translateY(-1px);
 }
-.btn-outline-red:hover { background: var(--red-soft); }
+.btn-ghost:active { transform: scale(0.98); }
 
 /* ── CASE RESULT ── */
 .case-result {
-  background: var(--white);
-  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 0.5px solid var(--glass-border);
+  border-left: 4px solid var(--red);
   border-radius: var(--radius);
-  padding: 36px 40px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
-  animation: fadeUp 0.35s ease;
+  padding: 28px 32px 28px 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
+  animation: cardIn 0.4s cubic-bezier(0.34,1.2,0.64,1) both;
 }
+/* Subtle top-right warmth — very light, not a glow */
+.case-result::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 180px; height: 120px;
+  background: radial-gradient(ellipse at 100% 0%, rgba(232,19,42,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.case-result::after { display: none; }
 .case-result-eyebrow {
-  font-size: 11px; font-weight: 700;
+  font-size: 10.5px; font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+/* "✓ Case Assigned" badge */
+.case-result-eyebrow-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(22,163,74,0.1);
+  border: 0.5px solid rgba(22,163,74,0.25);
+  color: var(--success);
+  padding: 3px 10px 3px 7px;
+  border-radius: var(--radius-pill);
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.case-result-eyebrow-badge svg { flex-shrink: 0; }
+.case-result-eyebrow-id {
   color: var(--red);
-  margin-bottom: 8px;
+  letter-spacing: 0.14em;
 }
 .case-result-name {
   font-family: 'Fraunces', serif;
-  font-size: 28px; font-weight: 900;
+  font-size: 27px; font-weight: 700;
   color: var(--dark);
+  letter-spacing: -0.6px;
   line-height: 1.2;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .case-result-explanation {
-  font-size: 14px; color: var(--text-2);
+  font-size: 13.5px; color: var(--text-2);
   line-height: 1.7;
   margin-bottom: 20px;
 }
 .case-route {
   display: inline-flex; align-items: center; gap: 10px;
-  padding: 10px 16px;
-  background: var(--surface);
-  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px;
+  border: 0.5px solid var(--border-strong);
 }
 .route-chip {
-  font-size: 12px; font-weight: 600;
+  font-size: 11.5px; font-weight: 600;
   padding: 4px 12px;
   border-radius: var(--radius-pill);
 }
@@ -406,14 +590,15 @@ main {
 .route-chip.target {
   background: var(--red-soft);
   color: var(--red);
+  border: 0.5px solid rgba(232,19,42,0.15);
 }
-.route-arrow { color: var(--text-3); font-size: 14px; }
+.route-arrow { color: var(--text-3); font-size: 13px; }
 .warning-card {
-  margin-top: 16px;
-  background: rgba(217,119,6,0.07);
-  border: 1px solid rgba(217,119,6,0.2);
-  border-radius: var(--radius-sm);
-  padding: 14px 18px;
+  margin-top: 14px;
+  background: rgba(217,119,6,0.06);
+  border: 0.5px solid rgba(217,119,6,0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
   font-size: 13px;
   color: #92400e;
   line-height: 1.6;
@@ -424,7 +609,7 @@ main {
   display: flex; align-items: center; gap: 16px;
   margin: 36px 0 24px;
 }
-.section-line { flex: 1; height: 1px; background: var(--border-strong); }
+.section-line { flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
 .section-label {
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.12em;
@@ -435,66 +620,103 @@ main {
 
 /* ── DOCUMENT GROUPS ── */
 .doc-group-title {
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--text-3);
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-strong);
-  margin-bottom: 10px;
-  margin-top: 28px;
+  margin-bottom: 12px;
+  margin-top: 32px;
+  position: relative;
+}
+.doc-group-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 0.5px;
+  background: linear-gradient(90deg, var(--border-strong) 0%, transparent 100%);
 }
 .doc-group-title:first-child { margin-top: 0; }
 
-/* ── DOCUMENT ITEMS ── */
+/* ── DOCUMENT ITEMS — elevated cards ── */
 .doc-item {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.75);
+  border: 0.5px solid rgba(255,255,255,0.7);
   border-radius: var(--radius-sm);
-  padding: 16px 18px 16px 16px;
-  margin-bottom: 8px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
   display: flex; gap: 14px; align-items: flex-start;
-  transition: border-color 0.15s;
-  animation: fadeUp 0.3s ease;
+  box-shadow: var(--shadow-option);
+  transition: all 0.2s cubic-bezier(0.34,1.3,0.64,1);
+  animation: docIn 0.35s cubic-bezier(0.34,1.2,0.64,1) both;
+  position: relative;
+  overflow: hidden;
 }
-.doc-item:hover { border-color: var(--border-strong); }
+.doc-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+  pointer-events: none;
+}
+.doc-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 8px 28px rgba(0,0,0,0.09);
+}
+@keyframes docIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .doc-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-top: 7px;
+  margin-top: 8px;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.8);
 }
-.doc-dot-mandatory { background: var(--red); }
+.doc-dot-mandatory {
+  background: radial-gradient(circle at 35% 35%, #FF4D60, var(--red));
+  box-shadow: 0 0 0 2px rgba(232,19,42,0.15), 0 0 0 4px rgba(232,19,42,0.06);
+}
 .doc-dot-conditional { background: var(--warning); }
-.doc-dot-optional { background: var(--success); }
-.doc-body { flex: 1; }
+.doc-dot-conditional {
+  background: radial-gradient(circle at 35% 35%, #FCD34D, var(--warning));
+  box-shadow: 0 0 0 2px rgba(217,119,6,0.15), 0 0 0 4px rgba(217,119,6,0.06);
+}
+.doc-dot-optional {
+  background: radial-gradient(circle at 35% 35%, #4ADE80, var(--success));
+  box-shadow: 0 0 0 2px rgba(22,163,74,0.15), 0 0 0 4px rgba(22,163,74,0.06);
+}
+/* Left border colour per category */
+.doc-item-mandatory { border-left: 2.5px solid rgba(232,19,42,0.35) !important; }
+.doc-item-conditional { border-left: 2.5px solid rgba(217,119,6,0.35) !important; }
+.doc-item-optional { border-left: 2.5px solid rgba(22,163,74,0.35) !important; }
+.doc-body { flex: 1; min-width: 0; }
 .doc-name-en {
   font-size: 14px; font-weight: 500;
   color: var(--dark);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
+  line-height: 1.4;
 }
 .doc-name-pl {
-  font-size: 12px; color: #2563eb;
-  margin-bottom: 2px;
-}
-.doc-name-ru {
-  font-size: 12px; color: var(--text-3);
+  font-size: 12px; color: #1e3a5f;
   margin-bottom: 10px;
+  opacity: 0.9;
 }
 .doc-tags {
-  display: flex; flex-wrap: wrap; gap: 6px;
+  display: flex; flex-wrap: wrap; gap: 5px;
 }
 .doc-tag {
-  font-size: 11px; font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.04em;
   padding: 3px 9px;
-  border-radius: 4px;
+  border-radius: 6px;
   text-transform: uppercase;
 }
 .tag-mandatory { background: var(--red-soft); color: var(--red); }
-.tag-conditional { background: rgba(217,119,6,0.09); color: var(--warning); }
-.tag-optional { background: rgba(22,163,74,0.09); color: var(--success); }
+.tag-conditional { background: rgba(217,119,6,0.08); color: var(--warning); }
+.tag-optional { background: rgba(22,163,74,0.08); color: var(--success); }
 .tag-source {
-  background: var(--surface);
+  background: rgba(0,0,0,0.05);
   color: var(--text-3);
   font-weight: 500;
   text-transform: none;
@@ -505,8 +727,8 @@ main {
   font-size: 12px; color: var(--text-3);
   font-style: italic;
   padding: 6px 10px;
-  background: var(--surface);
-  border-radius: 4px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 6px;
   line-height: 1.5;
 }
 
@@ -514,224 +736,173 @@ main {
 .reset-btn {
   display: block;
   margin: 40px auto 0;
-  padding: 11px 32px;
+  padding: 12px 32px;
   background: transparent;
-  border: 1.5px solid var(--border-strong);
+  border: 0.5px solid var(--border-strong);
   border-radius: var(--radius-pill);
   color: var(--text-3);
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 .reset-btn:hover { border-color: var(--red); color: var(--red); }
 
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── STICKY BOTTOM CTA (mobile) ── */
+.sticky-cta {
+  display: none;
+}
+@media (max-width: 600px) {
+  .sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    gap: 10px;
+    align-items: center;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
+    animation: slideUpCTA 0.5s 0.6s cubic-bezier(0.34,1.2,0.64,1) forwards;
+  }
+  @keyframes slideUpCTA {
+    to { transform: translateY(0); }
+  }
+  .sticky-cta-text {
+    flex: 1;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.35;
+    font-weight: 500;
+  }
+  .sticky-cta-text strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+  .sticky-cta-btn {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--red) 0%, #c01020 100%);
+    color: #fff; padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    font-size: 12.5px; font-weight: 700;
+    text-decoration: none; white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(232,19,42,0.35);
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+}
+
 /* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--surface); }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
 
-/* ── MOBILE FIRST — FULL PHONE OPTIMISATION ── */
-
-/* Bigger touch targets for all interactive elements */
-.option-btn {
-  min-height: 52px;
-  -webkit-tap-highlight-color: transparent;
-}
-.grad-card {
-  -webkit-tap-highlight-color: transparent;
-}
-.btn {
-  -webkit-tap-highlight-color: transparent;
-  min-height: 48px;
-}
-.lang-btn {
-  -webkit-tap-highlight-color: transparent;
-  min-height: 36px;
-  min-width: 44px;
-}
-.country-option {
-  min-height: 48px;
-  display: flex; align-items: center;
-}
-
-/* Prevent iOS zoom on input focus */
-.country-input {
-  font-size: 16px !important;
-}
-
-/* Smooth scroll behaviour */
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-/* ── PHONE ── */
+/* ── MOBILE ── */
 @media (max-width: 600px) {
 
-  /* Header — tighter on phone */
   header {
-    padding: 0 16px;
+    padding: 0 20px;
     height: 56px;
   }
-  .logo { font-size: 18px; }
-  .lang-btn {
-    padding: 5px 10px;
-    font-size: 11px;
-  }
+  .logo { font-size: 19px; }
+  .logo-tagline { font-size: 9px; }
+  .lang-btn { padding: 5px 11px; font-size: 11px; }
 
-  /* Main — card starts below sticky progress */
-  main {
-    padding: 16px 0 100px;
-  }
+  main { padding: 16px 0 110px; }
 
-  /* Card — flush sides on phone, just top/bottom radius */
   .card {
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 24px 20px 28px;
-    margin: 0 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin: 0 14px;
   }
 
-  /* Case result same */
   .case-result {
-    border-radius: 16px;
-    padding: 24px 20px;
-    margin: 0 12px 16px;
+    border-radius: 18px;
+    padding: 22px 20px;
+    margin: 0 14px 14px;
   }
 
-  /* Question title — readable on small screen */
-  .question-title {
-    font-size: 20px;
-    line-height: 1.3;
-    margin-bottom: 10px;
-  }
+  .question-title { font-size: 21px; letter-spacing: -0.3px; }
+  .question-purpose { font-size: 12.5px; padding: 10px 13px; margin-bottom: 20px; }
 
-  /* Purpose box — smaller text, less padding */
-  .question-purpose {
-    font-size: 12px;
-    padding: 9px 12px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-
-  /* Option buttons — full height, easy tap */
-  .options-grid { gap: 9px; }
+  .options-grid { gap: 8px; }
   .option-btn {
     padding: 15px 16px;
     font-size: 14px;
-    min-height: 54px;
-    border-radius: 10px;
+    min-height: 56px;
+    border-radius: 12px;
     gap: 12px;
   }
 
-  /* Nav buttons — stack vertically, Continue full width */
   .nav-row {
     flex-direction: column-reverse;
     gap: 10px;
     margin-top: 28px;
   }
-  .btn-primary {
-    width: 100%;
-    padding: 15px 24px;
-    font-size: 15px;
-    text-align: center;
-    justify-content: center;
-  }
-  .btn-ghost {
-    width: 100%;
-    padding: 13px 24px;
-    font-size: 14px;
-    text-align: center;
-  }
+  .btn-primary { width: 100%; padding: 16px 24px; font-size: 15px; justify-content: center; }
+  .btn-ghost { width: 100%; padding: 14px 24px; font-size: 14px; }
 
-  /* Graduate decision cards */
-  .grad-card {
-    padding: 18px 16px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
+  .grad-card { padding: 18px 16px; border-radius: 12px; }
   .grad-card-title { font-size: 14px; }
-  .grad-card-desc {
-    font-size: 13px;
-    padding-left: 0;
-    margin-top: 10px;
-  }
-  .grad-card-header { margin-bottom: 6px; }
+  .grad-card-desc { font-size: 12.5px; padding-left: 0; margin-top: 10px; }
 
-  /* Country search — bigger dropdown for thumb scroll */
   .country-dropdown { max-height: 260px; }
-  .country-option {
-    padding: 14px 16px;
-    font-size: 15px;
-  }
+  .country-option { padding: 14px 16px; font-size: 15px; }
 
-  /* Case result */
-  .case-result-name {
-    font-size: 22px;
-  }
-  .case-route {
-    flex-wrap: wrap;
-    gap: 8px;
-    width: 100%;
-  }
-  .route-chip {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
+  .case-result-name { font-size: 22px; }
+  .case-result-explanation { font-size: 13px; }
+  .case-result { padding: 22px 18px 22px 16px; }
+  .case-route { flex-wrap: wrap; gap: 8px; width: 100%; }
+  .route-chip { font-size: 11px; padding: 4px 10px; }
 
-  /* Document items — compact but readable */
-  .doc-item {
-    padding: 14px 14px 14px 12px;
-    border-radius: 10px;
-    gap: 10px;
-  }
-  .doc-name-en { font-size: 13px; }
-  .doc-name-pl, .doc-name-ru { font-size: 11px; }
+  .doc-item { padding: 15px 14px; border-radius: 12px; gap: 11px; }
+  .doc-name-en { font-size: 13.5px; }
+  .doc-name-pl { font-size: 11.5px; color: #1e3a5f; }
   .doc-tag { font-size: 10px; padding: 2px 7px; }
-
-  /* Section labels flush */
-  .section-divider { margin: 28px 12px 20px; }
+  .section-divider { margin: 28px 14px 20px; }
   .doc-group-title { margin-top: 24px; }
-
-  /* Document groups */
-  .doc-item-wrap { margin: 0 12px; }
-
-  /* Reset button */
-  .reset-btn {
-    width: calc(100% - 24px);
-    margin: 32px 12px 0;
-    padding: 14px 24px;
-    font-size: 14px;
-  }
-
-  /* Step label */
+  .doc-item-wrap { margin: 0 14px; }
+  .reset-btn { width: calc(100% - 28px); margin: 32px 14px 0; padding: 14px 24px; font-size: 14px; }
   .step-label { font-size: 10px; margin-bottom: 8px; }
-  .decision-banner { font-size: 10px; padding: 5px 10px; }
+  .decision-banner { font-size: 10px; padding: 5px 11px; }
 }
 
-/* ── SMALL PHONES (iPhone SE, 375px) ── */
+/* ── SMALL PHONES (375px) ── */
 @media (max-width: 380px) {
-  .card { margin: 0 8px; padding: 20px 16px 24px; }
-  .case-result { margin: 0 8px 12px; padding: 20px 16px; }
-  .question-title { font-size: 18px; }
-  .option-btn { font-size: 13px; padding: 14px 14px; }
-  .case-result-name { font-size: 19px; }
+  .card { margin: 0 10px; padding: 20px 16px 24px; }
+  .case-result { margin: 0 10px 12px; padding: 20px 16px; }
+  .question-title { font-size: 19px; }
+  .option-btn { font-size: 13.5px; padding: 14px 14px; }
+  .case-result-name { font-size: 20px; }
 }
 
-/* ── SAFE AREA for iPhone notch / home bar ── */
+/* ── SAFE AREA ── */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  main {
-    padding-bottom: calc(80px + env(safe-area-inset-bottom));
-  }
+  main { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+}
+
+/* ── SMOOTH SCROLL ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <span class="logo-karta">Karta</span><span class="logo-flow">Flow</span>
+  <div class="logo-wrap">
+    <div class="logo">
+      <span class="logo-karta">Karta</span><span class="logo-flow">Flow</span>
+    </div>
+    <span class="logo-tagline">TRC Document Checker</span>
   </div>
   <div class="lang-switcher">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -830,150 +1001,187 @@ const CONDITIONS = {
   IF_EMPLOYER_CHANGE: { en: 'If you changed employer during TRC validity', pl: 'Przy zmianie pracodawcy w czasie ważności karty', ru: 'При смене работодателя в период действия КВП', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
   IF_WORKED_PREVIOUS_YEAR: { en: 'If you worked in the previous tax year', pl: 'Jeśli pracowałeś w poprzednim roku', ru: 'Если работали в предыдущем налоговом году', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
   IF_NO_ACCESS_TO_LABOUR_MARKET: { en: 'If no automatic access to Polish labour market', pl: 'Jeśli bez automatycznego dostępu do rynku pracy', ru: 'Без автоматического доступа к польскому рынку труда', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
-  IF_POLISH_GRADUATE: { en: 'If graduated from a Polish university', pl: 'Jeśli ukończyłeś polską uczelnię', ru: 'Если выпускник польского университета', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' }
+  IF_POLISH_GRADUATE: { en: 'If graduated from a Polish university', pl: 'Jeśli ukończyłeś polską uczelnię', ru: 'Если выпускник польского университета', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_NEW_STUDENT: { en: 'Only for new students (first time in this programme)', pl: 'Tylko dla nowych studentów', ru: 'Только для новых студентов', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_CONTINUING_STUDENT: { en: 'Only for continuing students (same programme)', pl: 'Tylko dla kontynuujących studia', ru: 'Только для продолжающих обучение', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_NEW_PROGRAMME: { en: 'Only if starting a new study programme', pl: 'Tylko przy nowym programie studiów', ru: 'Только при переходе на новую программу', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_CONTINUING_PROGRAMME: { en: 'Only if continuing the same study programme', pl: 'Tylko przy kontynuacji tego samego programu', ru: 'Только при продолжении той же программы', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_SPOUSE: { en: 'Only for spouse applicants', pl: 'Tylko dla małżonków', ru: 'Только для супругов', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' },
+  IF_CHILD_OR_PARENT: { en: 'For child or parent applicants', pl: 'Dla dzieci lub rodziców', ru: 'Для детей или родителей', cls: 'tag-conditional', dotCls: 'doc-dot-conditional' }
 };
+
+// ─── INFO LABEL LOOKUP ────────────────────────────────────────────────────
+// Maps document type to short smart label for the expand button
+function getInfoLabel(docEn) {
+  const d = docEn.toLowerCase();
+  if (d.includes('photo'))              return 'Requirements';
+  if (d.includes('passport'))           return 'What to prepare';
+  if (d.includes('stamp duty') || d.includes('payment confirmation')) return 'How to pay';
+  if (d.includes('application') || d.includes('wniosek'))  return 'Where to find';
+  if (d.includes('health insurance') || d.includes('ubezpieczenie')) return 'What qualifies';
+  if (d.includes('bank') || d.includes('financial means') || d.includes('funds')) return 'What to show';
+  if (d.includes('accommodation') || d.includes('rental') || d.includes('zamieszkania')) return 'What to show';
+  if (d.includes('certificate') || d.includes('zaświadczenie') || d.includes('university') || d.includes('diploma')) return 'Where to get';
+  if (d.includes('zus') || d.includes('social insurance')) return 'How to obtain';
+  if (d.includes('tax') || d.includes('pit') || d.includes('podatk')) return 'How to obtain';
+  if (d.includes('employer') || d.includes('annex') || d.includes('załącznik') || d.includes('krs') || d.includes('ceidg')) return 'Employer provides';
+  if (d.includes('contract') || d.includes('umowa'))  return 'What to include';
+  if (d.includes('pesel'))              return 'Where to get';
+  if (d.includes('residence card') || d.includes('karta pobytu') || d.includes('decision') || d.includes('decyzja')) return 'What to bring';
+  if (d.includes('birth cert') || d.includes('marriage cert') || d.includes('translation')) return 'What to prepare';
+  if (d.includes('work permit') || d.includes('zezwolenie na pracę')) return 'Employer provides';
+  return 'Details';
+}
 
 const DOCUMENT_MATRIX = {
   'CT-01': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Zaświadczenie z uczelni o przyjęciu na studia', en: 'Certificate from university confirming admission', ru: 'Справка из университета о зачислении на обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with information about fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
-    { pl: 'wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'IF_STUDENT_NEXT_YEAR', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'IF_STUDENT_NEXT_YEAR', source: 'Uczelnia (University)', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in the official application form online at the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (available in English, Ukrainian, Russian and 4 other languages). From 2026, applications are submitted electronically through MOS — no paper forms needed. Fill in all fields clearly in Polish using block capital letters. You need to print 2 copies — one for submission, one for your records. Both must be signed.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your passport must be valid for the entire intended period of stay. Make a photocopy of every page that has a stamp, visa, or entry/exit mark — including the photo page and signature page. The office requires the original for inspection and keeps the copies.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: 'You need 2 photographs. Size: 3.5 cm × 4.5 cm (same as passport photos). The face must fill 70–80% of the frame. Plain light background, no headwear (unless for religious reasons), no glasses. Photos must be taken no more than 6 months before submission. Standard passport photo booths or photo studios work fine.' },
+    { pl: 'Zaświadczenie z uczelni o przyjęciu na studia', en: 'Certificate from university confirming admission', ru: 'Справка из университета о зачислении на обучение', condition: 'IF_NEW_STUDENT', source: 'Uczelnia (University)', notes: 'Only for new students starting their programme', info: 'Obtain this from your university\'s Dean\'s Office (Dziekanat) or International Student Office. It must confirm your full name, programme name, academic year, and form of study (full-time/stacjonarne). It should be on university letterhead and stamped. Request it at least 1–2 weeks before your application date.' },
+    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'IF_CONTINUING_STUDENT', source: 'Uczelnia (University)', notes: 'Only for students continuing the same programme', info: 'Obtain from your Dziekanat or International Office. This must confirm that you are an active enrolled student continuing your current programme into the next academic year. It should include your name, student ID, programme, and expected graduation date. Request it at the start of a new semester.' },
+    { pl: 'Wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'IF_CONTINUING_STUDENT', source: 'Uczelnia (University)', notes: 'Only for continuing students — shows credits/grades', info: 'This is a printout from your university\'s student system (e.g. USOS) showing all completed subjects, grades, and credit points. Log in to your student portal, navigate to academic progress or transcript, and print or export the full record. It must show your name, student ID, and all completed semesters. Stamp from the Dziekanat is recommended.' },
+    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null, info: 'A receipt or bank transfer confirmation showing that you have paid your tuition fees for the current and/or upcoming academic year. This can be a printout from your bank, a payment confirmation email from the university, or an official receipt. It must show your name, the amount, and the academic year.' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Must cover your full planned period of stay in Poland. Accepted forms: private health insurance policy from a recognised insurer (e.g. Allianz, Generali, AXA, PZU), EKUZ card (EU citizens), or ZUS registration (if employed). The policy must be in your name and show the coverage period, scope (medical treatment in Poland), and insured amount — minimum recommended coverage is €30,000. A printout of the policy confirmation is sufficient.' },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'A bank statement from your account, issued no more than 1 month before submission. Must show your full name, account number, and sufficient balance. For students, the required amount should cover: living expenses (minimum ~1,010 PLN per month), accommodation costs (rent + utilities), and a return ticket (~2,500 PLN). For an academic year (10 months) the recommended total is approximately 15,000–20,000 PLN depending on your rent. Sponsor support letters with bank statements are also accepted if someone else is financing your stay.' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with information about fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'A rental agreement (umowa najmu) showing your name, address, monthly rent amount, and duration. Must cover the intended period of stay. If you live in a student dormitory, a confirmation letter from the dormitory administration suffices. If staying with family or friends, a notarised declaration of accommodation (oświadczenie o udostępnieniu lokalu) is required along with the property owner\'s ID copy.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for this application type is <strong>340 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts). <br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'If you already have a PESEL number, include a document confirming it (e.g. the confirmation letter issued when PESEL was assigned, or a meldunek/registration document). Make a copy. If you do not have a PESEL yet, this is not required — you will be assigned one during the TRC process.' },
   ],
   'CT-02': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null },
-    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Print 2 copies, fill in Polish block capitals, sign both. Submit before your current TRC expires — the date on your decyzja is the deadline.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport must be valid for the full planned stay. Photocopy every page with a stamp, visa, or entry/exit mark, plus the photo page. Original shown for inspection; copies kept by the office.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Plain light background, face filling 70–80% of frame. No glasses, no headwear (except religious). Taken within the last 6 months. Standard photo studio or booth is fine.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your current TRC (Karta Pobytu). Bring the original and a photocopy of both sides. The office inspects the original and retains the copy.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карcie + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The administrative decision (decyzja) you received when your current TRC was granted — a multi-page A4 document. Bring original and photocopy of all pages.' },
+    { pl: 'Zaświadczenie z uczelni o przyjęciu na studia (nowy program)', en: 'Certificate from university confirming admission to new programme', ru: 'Справка из университета о зачислении на новую программу', condition: 'IF_NEW_PROGRAMME', source: 'Uczelnia (University)', notes: 'Only if starting a new study programme', info: 'Required when switching to a different programme. Obtain from the Dziekanat or International Office. Must confirm: your name, new programme name, academic year, and form of study (full-time / stacjonarne). University letterhead and stamp required.' },
+    { pl: 'Zaświadczenie z uczelni o kontynuacji studiów', en: 'Certificate from university confirming continuation of studies', ru: 'Справка из университета о продолжении обучения', condition: 'IF_CONTINUING_PROGRAMME', source: 'Uczelnia (University)', notes: 'Only if continuing the same programme', info: 'Obtain from your Dziekanat or International Office. Must confirm you remain an active enrolled student in the same programme, with your name, student ID, programme, and expected graduation date. University stamp required.' },
+    { pl: 'Wydruk karty okresowych osiągnięć studenta', en: 'Printout of student academic progress record', ru: 'Распечатка карты периодических достижений студента', condition: 'IF_CONTINUING_PROGRAMME', source: 'Uczelnia (University)', notes: 'Only for continuing students — shows all credits and grades', info: 'Full transcript printout from your student portal (e.g. USOS). Shows completed courses, grades, and credit points per semester. Log in, navigate to academic record, and export or print. Dziekanat stamp strongly recommended.' },
+    { pl: 'Potwierdzenie opłaty za studia', en: 'Tuition payment confirmation', ru: 'Подтверждение оплаты за обучение', condition: 'ALWAYS', source: 'Uczelnia (University)', notes: null, info: 'Bank transfer receipt or university payment confirmation showing your name, amount, and academic year. Can be a bank printout, payment confirmation email, or official university receipt.' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Must cover your full intended stay in Poland. Accepted: private insurance (PZU, Allianz, AXA, Generali), ZUS registration if employed, or EKUZ (EU citizens). Policy in your name with dates and coverage amount visible. Minimum recommended: €30,000.' },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Bank statement issued within the last month showing your name and sufficient balance. For students: minimum ~1,010 PLN/month for living, plus rent and utilities, plus ~2,500 PLN return ticket. Recommend showing 15,000–20,000 PLN for a full academic year. Sponsor letter + their bank statement also accepted.' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Rental agreement with your name, address, monthly cost, and duration. Dormitory: letter from administration. Staying with others: notarised declaration from property owner plus their ID copy.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for this application type is <strong>340 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts). <br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'If you have a PESEL, include the confirmation document and a copy. Not required if you do not yet have one.' },
   ],
   'CT-03': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Dyplom + kopia', en: 'Diploma (university graduation certificate) + copy', ru: 'Диплом об окончании университета + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select the graduate (absolwent) basis. Print 2 copies, complete in Polish block capitals, sign both.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport must be valid for the full intended stay. Photocopy all pages with stamps, visas, or entry/exit marks. Original for inspection, copies retained.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Plain light background, no glasses, no headwear (except religious). Face fills 70–80% of frame. Taken within last 6 months.' },
+    { pl: 'Dyplom + kopia', en: 'Diploma (university graduation certificate) + copy', ru: 'Диплом об окончании университета + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your official graduation diploma issued by a Polish university or college. Bring the original and a photocopy. If the diploma is in a language other than Polish, a sworn translation (tłumaczenie przysięgłe) may also be needed — confirm with your local Voivodeship office.' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Private insurance covering your stay in Poland. Must be in your name with dates and minimum coverage of €30,000. Providers: PZU, Allianz, Generali, AXA. If employed, ZUS registration is accepted instead.' },
+    { pl: 'Dokument potwierdzający posiadanie środków finansowych', en: 'Document confirming sufficient financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Bank statement issued within the last month showing your name and sufficient balance. For the 9-month graduate permit, the recommended amount is at least ~10,000–15,000 PLN (covering ~1,010 PLN/month living expenses + rent). Sponsor support also accepted with sponsor bank statement.' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania w Polsce', en: 'Proof of accommodation in Poland with fixed costs', ru: 'Документ, подтверждающий место проживания в Польше', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Rental agreement in your name showing address, monthly rent, and duration. If staying with others, a notarised declaration of accommodation from the property owner is required.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for this application type is <strong>340 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts). <br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'Your current TRC (Karta Pobytu) if you hold one. Original for inspection, photocopy of both sides retained.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'The administrative decision (decyzja) for your current TRC. Bring original and photocopy of all pages.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'If you have a PESEL, include the confirmation document and a copy.' },
   ],
   'CT-04': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
-    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select the work basis (praca). Print 2 copies, complete in Polish block capitals, sign both. Apply before your study TRC expires.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport must be valid for full intended stay. Photocopy all stamped, visa, and entry/exit pages plus the photo page.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Plain light background, no glasses, no headwear. Face 70–80% of frame. Taken within last 6 months.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your current study TRC card. Original for inspection, photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The administrative decision from your current study TRC. Original and photocopy of all pages.' },
+    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract (umowa zlecenia)', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your signed employment contract (umowa o pracę) or mandate contract (umowa zlecenia). Must be signed by both you and the employer. Must show: employer name, your name, position, salary (at least minimum wage — 4,666 PLN gross in 2025), start date, and duration.' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with submission confirmation', ru: 'ZUS ZUA — регистрация в системе соцстрахования с подтверждением', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: 'Required if you are not a student — confirms you are registered for social insurance', info: 'ZUS ZUA is the form your employer submits to register you for full social insurance (not just health insurance). Ask your employer for a copy of the ZUS ZUA form along with the confirmation (UPO) of its submission to ZUS. If you are registered in ZUS PUE, you can log in and download it yourself at <a href="https://www.zus.pl/portal/logowanie.npi" target="_blank">zus.pl</a>.' },
+    { pl: 'Prywatne ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: 'Required if you are a student working under umowa zlecenia', info: 'Students working under umowa zlecenia are not automatically covered by ZUS health insurance. You need a private health insurance policy covering your period of stay in Poland. Minimum coverage: €30,000. Providers: PZU, Allianz, Generali, AXA.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 440 złotych', en: 'Stamp duty payment confirmation 440 PLN', ru: 'Подтверждение оплаты гербового сбора 440 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for a work-based TRC is <strong>440 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts).<br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'If you have a PESEL, include confirmation document and copy.' },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 — employer form (Załącznik nr 1)', ru: 'Приложение № 1 — форма работодателя', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'A specific official form that your employer must complete and sign. It confirms details about the job offer and your employment conditions. Download the current Załącznik nr 1 from the MOS portal or your Voivodeship Office website. Ask your HR to fill it in, sign, and stamp. Under MOS v2 (2026), employers sign this digitally through the portal.' },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming business activity and financial resources", ru: 'Заявление работодателя о хозяйственной деятельности и финансовых ресурсах', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'A formal declaration by the employer confirming that: their business is genuinely active, they have sufficient financial resources to employ you, and all conditions of employment will be met. Must be on company letterhead, signed by an authorised representative, and stamped. Your employer or HR department prepares this.' },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: null, info: 'A printout confirming the employer company is officially registered in Poland. For companies: KRS extract from <a href="https://ekrs.ms.gov.pl" target="_blank">ekrs.ms.gov.pl</a> (free, instant). For sole traders: CEIDG extract from <a href="https://www.ceidg.gov.pl" target="_blank">ceidg.gov.pl</a> (free, instant). Print on day of submission for most current version.' },
   ],
   'CT-05': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Umowa o pracę / zlecenia - kopia', en: 'Employment contract (copy)', ru: 'Копия трудового договора', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
-    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
-    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A / statement of intent to employ)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: 'Permit type A / oświadczenie o powierzeniu pracy / zawiadomienie' },
-    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой службы об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zaświadczenie ZUS o braku zaległości w opłacaniu składek', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности по взносам', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select work basis (praca). Print 2 copies, fill in Polish block capitals, sign both. Submit before your visa expires.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport must be valid for the full planned stay. Photocopy all stamped, visa, and entry/exit pages plus the photo page.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Plain light background, no glasses, no headwear. Face 70–80% of frame. Taken within last 6 months.' },
+    { pl: 'Umowa o pracę / zlecenia - kopia', en: 'Employment contract or mandate contract (copy)', ru: 'Копия трудового договора / договора поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your signed employment or mandate contract. Must show: employer name, your name, position, salary (minimum 4,666 PLN gross in 2025), start date, and duration. Bring a copy — the original may also be requested for inspection.' },
+    { pl: 'Oświadczenie wnioskodawcy', en: 'Applicant statement form (Oświadczenie)', ru: 'Заявление-декларация заявителя', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Applicant personal declaration — template from Voivodeship office', info: 'A formal declaration you must complete confirming your personal information, address, and the details of your application. The template is provided by your Voivodeship Office — download it from your office website or ask for it when you register your appointment. Fill in all fields clearly, sign, and include with your application package.' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS (ostatnie 1–3 miesiące)', en: 'ZUS ZUA social insurance registration with confirmation — last 1–3 months', ru: 'ZUS ZUA за последние 1–3 месяца с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: 'Required if NOT a student', info: 'ZUS ZUA confirms you are registered for social insurance. Request the last 1–3 months of ZUS ZUA confirmations from your employer, or log in to ZUS PUE at <a href="https://www.zus.pl/portal/logowanie.npi" target="_blank">zus.pl</a> to download confirmation yourself. Covers the period of employment you are declaring.' },
+    { pl: 'Rachunki do umowy zlecenia', en: 'Invoices / settlement receipts for mandate contract (rachunki)', ru: 'Счета/квитанции по договору поручения', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: 'If working under umowa zlecenia (mandate contract)', info: 'If you work under a mandate contract (umowa zlecenia), you need the signed payment receipts (rachunki) showing the work performed and amount paid for each settlement period. Your employer provides these. Bring the last 3–6 months.' },
+    { pl: 'Zeznanie podatkowe PIT za poprzedni rok', en: 'Annual tax declaration (PIT) for previous tax year', ru: 'Налоговая декларация PIT за предыдущий налоговый год', condition: 'IF_WORKED_PREVIOUS_YEAR', source: 'Wnioskodawca', notes: 'If you worked in Poland in the previous calendar year', info: 'Your annual tax return (PIT-37 or PIT-36) for the previous year, confirming your income. File it online for free at <a href="https://www.podatki.gov.pl" target="_blank">podatki.gov.pl</a> using Twój e-PIT (auto-filled from employer data). Download the submitted and accepted version (with UPO confirmation). Deadline each year: 30 April.' },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach (wnioskodawca)', en: 'Tax office certificate of no tax arrears — applicant', ru: 'Справка из налоговой об отсутствии задолженности — заявитель', condition: 'IF_WORKED_PREVIOUS_YEAR', source: 'Wnioskodawca', notes: 'If you worked in Poland — may be requested', info: 'A certificate from the Polish tax office (Urząd Skarbowy) confirming you have no outstanding tax liabilities. Apply in person at your local Urząd Skarbowy or online via ePUAP at <a href="https://www.podatki.gov.pl" target="_blank">podatki.gov.pl</a>. Processing time: up to 7 days. Fee: 21 PLN.' },
+    { pl: 'Prywatne ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: 'Only if student on umowa zlecenia', info: 'Students on umowa zlecenia are not automatically covered by ZUS health insurance. You need a private policy in your name covering your stay. Minimum €30,000. Providers: PZU, Allianz, AXA, Generali.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'Include PESEL confirmation document and copy if you have one.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 440 złotych', en: 'Stamp duty payment confirmation 440 PLN', ru: 'Подтверждение оплаты гербового сбора 440 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for a work-based TRC is <strong>440 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts).<br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 — employer form (Załącznik nr 1)', ru: 'Приложение № 1 — форма работодателя', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Official form your employer must complete and sign, confirming your employment details. Download from <a href="https://www.gov.pl/web/mswia" target="_blank">gov.pl</a> and ask your HR to fill and stamp it.' },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming business activity and financial resources", ru: 'Заявление работодателя о хозяйственной деятельности и финансовых ресурсах', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Formal employer declaration on company letterhead confirming: active business, financial ability to pay your salary, and genuine employment conditions. Signed and stamped by authorised company representative.' },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: null, info: 'Free printout of employer registration. Companies: <a href="https://ekrs.ms.gov.pl" target="_blank">ekrs.ms.gov.pl</a>. Sole traders: <a href="https://www.ceidg.gov.pl" target="_blank">ceidg.gov.pl</a>. Print on submission day for most current data.' },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A / oświadczenie / zawiadomienie)', ru: 'Разрешение на работу (тип A / объявление)', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: 'Only if you do not have automatic access to the Polish labour market', info: 'Required for nationalities that need a formal work authorisation. Your employer applies for this at the Voivodeship Office (zezwolenie na pracę type A) or registers an oświadczenie at PUP. Ukrainian citizens (from 2022) and Polish university graduates are generally exempt. Check your nationality\'s status with your advisor.' },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach (pracodawca)', en: 'Tax office certificate of no tax arrears — employer', ru: 'Справка из налоговой об отсутствии задолженности — работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Employer\'s tax clearance certificate from their Urząd Skarbowy. Confirms the company has no outstanding tax liabilities. Employer obtains this in person or via ePUAP. Valid for 3 months from issue date.' },
+    { pl: 'Zaświadczenie ZUS o braku zaległości w opłacaniu składek (pracodawca)', en: 'ZUS certificate of no contribution arrears — employer', ru: 'Справка из ZUS об отсутствии задолженности по взносам — работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Employer\'s certificate from ZUS confirming no outstanding social insurance contribution debts. Employer requests this at the local ZUS office or online via PUE ZUS at <a href="https://www.zus.pl" target="_blank">zus.pl</a>. Valid for 3 months.' },
   ],
   'CT-06': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
-    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
-    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A / statement of intent to employ)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой службы об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zaświadczenie ZUS o braku zaległości', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select work basis. Print 2 copies, fill in Polish block capitals, sign both. Submit before your current TRC expires.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport valid for full intended stay. Photocopy all stamped/visa/entry pages plus photo page.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Light background, face 70–80% of frame, no glasses or headwear. Taken within last 6 months.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your current work TRC card. Original for inspection, photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Administrative decision from your current work TRC. Original and photocopy of all pages.' },
+    { pl: 'Umowa o pracę / zlecenia', en: 'Employment contract or mandate contract', ru: 'Трудовой договор / договор поручения', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your current signed employment or mandate contract. Must show: employer, your name, position, salary (minimum 4,666 PLN gross in 2025), start date, duration.' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA registration with submission confirmation', ru: 'ZUS ZUA с подтверждением отправки', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: 'If not a student', info: 'Last 1–3 months of ZUS ZUA confirmations. Request from employer or download from PUE ZUS at <a href="https://www.zus.pl/portal/logowanie.npi" target="_blank">zus.pl</a>.' },
+    { pl: 'Rachunki do umowy zlecenia', en: 'Invoices / settlement receipts for mandate contract', ru: 'Счета по договору поручения', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: 'If on umowa zlecenia', info: 'Signed payment receipts (rachunki) from your employer for each settlement period. Bring last 3–6 months.' },
+    { pl: 'Zeznanie podatkowe PIT za poprzedni rok', en: 'Annual tax declaration (PIT) for previous year', ru: 'Налоговая декларация PIT за предыдущий год', condition: 'IF_WORKED_PREVIOUS_YEAR', source: 'Wnioskodawca', notes: 'If you worked in Poland last year', info: 'Annual PIT return for previous year filed at <a href="https://www.podatki.gov.pl" target="_blank">podatki.gov.pl</a>. Download submitted and accepted version with UPO confirmation. Deadline: 30 April each year.' },
+    { pl: 'Prywatne ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: 'Only if student on umowa zlecenia', info: 'Private policy covering stay in Poland, minimum €30,000. Providers: PZU, Allianz, AXA, Generali.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'Include PESEL confirmation and copy if you have one.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 440 złotych', en: 'Stamp duty payment confirmation 440 PLN', ru: 'Подтверждение оплаты гербового сбора 440 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for a work-based TRC is <strong>440 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts).<br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 — employer form', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Official form from <a href="https://www.gov.pl/web/mswia" target="_blank">gov.pl</a>, completed, signed, and stamped by your employer.' },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming business activity and financial resources", ru: 'Заявление работодателя', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Formal employer declaration on company letterhead confirming active business, ability to pay your salary, and genuine employment. Signed and stamped.' },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка KRS/CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: null, info: 'Free printout from <a href="https://ekrs.ms.gov.pl" target="_blank">ekrs.ms.gov.pl</a> (companies) or <a href="https://www.ceidg.gov.pl" target="_blank">ceidg.gov.pl</a> (sole traders). Print on submission day.' },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null, info: 'Required only for nationals who need formal work authorisation. Employer applies for this at the Voivodeship Office. Ukrainian citizens and Polish university graduates generally exempt.' },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach (pracodawca)', en: 'Tax office certificate of no tax arrears — employer', ru: 'Справка из налоговой — работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Employer tax clearance from their Urząd Skarbowy. Obtained in person or via ePUAP. Valid 3 months from issue.' },
+    { pl: 'Zaświadczenie ZUS o braku zaległości (pracodawca)', en: 'ZUS certificate of no contribution arrears — employer', ru: 'Справка из ZUS об отсутствии задолженности — работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Employer ZUS clearance from <a href="https://www.zus.pl" target="_blank">zus.pl</a> or local ZUS office. Valid 3 months.' },
   ],
   'CT-07': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 220 złotych', en: 'Stamp duty payment confirmation 220 PLN', ru: 'Подтверждение оплаты гербового сбора 220 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Note: 220 PLN for change of decision (not 340 PLN)' },
-    { pl: 'Nowa umowa o pracę/zlecenia – kopia notarialnie poświadczona', en: 'New employment/mandate contract – notarized copy', ru: 'Новый трудовой договор — нотариально заверенная копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA social insurance registration with confirmation', ru: 'Справка ZUS ZUA с подтверждением отправки в ZUS', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null },
-    { pl: 'Prywatne Ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null },
-    { pl: 'Załącznik nr 1', en: 'Annex No. 1 (employer form)', ru: 'Приложение № 1', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "Employer's statement confirming financial resources and genuine business activity", ru: 'Заявление работодателя о финансовых ресурсах и реальной хозяйственной деятельности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (employer registration)', ru: 'Выписка из реестра KRS / CEIDG', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: 'Employer registration document' },
-    { pl: 'ZUS ZUA wraz z potwierdzeniem (pracodawca)', en: 'ZUS ZUA registration (employer copy)', ru: 'ZUS ZUA — копия работодателя', condition: 'IF_NOT_STUDENT', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears', ru: 'Справка из налоговой об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
-    { pl: 'Zaświadczenie ZUS o braku zaległości', en: 'ZUS certificate of no contribution arrears', ru: 'Справка из ZUS об отсутствии задолженности', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application (Change of Decision)', ru: 'Заявление (изменение решения)', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze — Zmiana decyzji procedure', info: 'This is a change-of-decision application (zmiana decyzji), not a standard renewal. Download the application form from <a href="https://cudzoziemcy.gov.pl" target="_blank">cudzoziemcy.gov.pl</a>. Indicate that you are applying for a change of work conditions in your current residence decision. Print 2 copies, fill in Polish block capitals, sign both.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport valid for full intended stay. Photocopy all stamped/visa/entry pages.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Light background, face 70–80% of frame, taken within last 6 months.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your current work TRC. Original for inspection, photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The decision being changed — original and photocopy of all pages.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'Include PESEL confirmation and copy if you have one.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 220 złotych', en: 'Stamp duty payment confirmation 220 PLN', ru: 'Подтверждение оплаты гербового сбора 220 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '220 PLN for change of decision — NOT 440 PLN', info: 'The stamp duty for a Change of Decision (Zmiana Decyzji) is <strong>220 PLN</strong> — not the standard 440 PLN. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong>.<br><br>⚠️ <strong>Do not use any account number found online.</strong> Confirm the correct account with your local Voivodeship Office or contact us at KartaFlow before paying. Paying to the wrong account can delay your application.' },
+    { pl: 'Nowa umowa o pracę/zlecenia – kopia', en: 'New employment/mandate contract — copy', ru: 'Новый трудовой договор — копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your new signed employment or mandate contract with the new employer. Must show all details: employer name, your name, position, salary (at least 4,666 PLN gross in 2025), start date, and duration. Bring a copy — original may be requested.' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem wysłania do ZUS', en: 'ZUS ZUA registration with submission confirmation', ru: 'ZUS ZUA с подтверждением', condition: 'IF_NOT_STUDENT', source: 'Wnioskodawca', notes: null, info: 'ZUS ZUA from your new employer. Request last 1–3 months of confirmations, or download from PUE ZUS at <a href="https://www.zus.pl/portal/logowanie.npi" target="_blank">zus.pl</a>.' },
+    { pl: 'Prywatne ubezpieczenie zdrowotne', en: 'Private health insurance', ru: 'Частная медицинская страховка', condition: 'IF_STUDENT_ON_ZLECENIE', source: 'Wnioskodawca', notes: null, info: 'Required if on umowa zlecenia. Private policy covering stay, minimum €30,000.' },
+    { pl: 'Załącznik nr 1', en: 'Annex No. 1 — new employer form', ru: 'Приложение № 1 — новый работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Completed by your NEW employer. Download from MOS portal or Voivodeship Office website. Fill, sign, stamp. Under MOS v2, signed digitally.' },
+    { pl: 'Oświadczenie podmiotu powierzającego wykonywanie pracy', en: "New employer's statement confirming business activity and financial resources", ru: 'Заявление нового работодателя', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Formal declaration from your new employer on company letterhead confirming active business and ability to employ you. Signed and stamped.' },
+    { pl: 'Wydruk KRS/CEIDG', en: 'KRS/CEIDG register extract (new employer)', ru: 'Выписка KRS/CEIDG нового работодателя', condition: 'IF_AVAILABLE', source: 'Pracodawca (Employer)', notes: null, info: 'Free printout from <a href="https://ekrs.ms.gov.pl" target="_blank">ekrs.ms.gov.pl</a> (companies) or <a href="https://www.ceidg.gov.pl" target="_blank">ceidg.gov.pl</a> (sole traders). Print on submission day.' },
+    { pl: 'ZUS ZUA wraz z potwierdzeniem (pracodawca)', en: 'ZUS ZUA registration — new employer copy', ru: 'ZUS ZUA нового работодателя', condition: 'IF_NOT_STUDENT', source: 'Pracodawca (Employer)', notes: null, info: 'New employer\'s ZUS ZUA confirming your registration for social insurance at the new workplace.' },
+    { pl: 'Zezwolenie na pracę', en: 'Work permit (type A)', ru: 'Разрешение на работу', condition: 'IF_NO_ACCESS_TO_LABOUR_MARKET', source: 'Pracodawca (Employer)', notes: null, info: 'Required only for nationals without automatic labour market access. New employer must apply at the Voivodeship Office.' },
+    { pl: 'Zaświadczenie US o niezaleganiu w podatkach', en: 'Tax office certificate of no tax arrears — new employer', ru: 'Справка из налоговой — новый работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'Tax clearance from the new employer\'s Urząd Skarbowy. Valid 3 months from issue.' },
+    { pl: 'Zaświadczenie ZUS o braku zaległości', en: 'ZUS certificate of no contribution arrears — new employer', ru: 'Справка из ZUS — новый работодатель', condition: 'ALWAYS', source: 'Pracodawca (Employer)', notes: null, info: 'New employer\'s ZUS clearance certificate. Request at <a href="https://www.zus.pl" target="_blank">zus.pl</a> or local ZUS office. Valid 3 months.' },
   ],
   'CT-08': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Akt małżeństwa lub akt urodzenia + kopia', en: 'Marriage certificate or birth certificate + copy', ru: 'Свидетельство о браке или свидетельство о рождении + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Tłumaczenie przysięgłe aktu małżeństwa lub urodzenia', en: 'Certified sworn translation of marriage/birth certificate', ru: 'Присяжный перевод свидетельства о браке/рождении', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Paszport głównego wnioskodawcy + kopia', en: 'Main applicant (sponsor) passport + copy', ru: 'Паспорт основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Karta pobytu głównego wnioskodawcy + kopia', en: 'Main applicant residence card + copy', ru: 'Карта побыту основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt głównego wnioskodawcy + kopia', en: 'Main applicant residence decision + copy', ru: 'Решение о пребывании основного заявителя + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający stabilny dochód', en: 'Document confirming stable income', ru: 'Документ, подтверждающий стабильный доход', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokumenty potwierdzające wspólne zamieszkiwanie', en: 'Documents confirming cohabitation and joint household', ru: 'Документы, подтверждающие совместное проживание', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Joint photos from different periods, shared bank account, shared property ownership' },
-    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Private insurance or ZUS ZUA/ZUS ZCNA' },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Karta pobytu + ksero', en: 'Your own residence card + copy (if applicable)', ru: 'Ваша карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Your own residence decision + copy (if applicable)', ru: 'Ваше решение о пребывании + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select family reunification basis (łączenie rodzin). Print 2 copies, fill in Polish block capitals, sign both.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport valid for full intended stay. Photocopy all stamped/visa/entry pages plus photo page.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Light background, face 70–80% of frame. Taken within last 6 months.' },
+    { pl: 'Akt małżeństwa + kopia', en: 'Marriage certificate + copy', ru: 'Свидетельство о браке + копия', condition: 'IF_SPOUSE', source: 'Wnioskodawca', notes: 'Only for spouse applicants', info: 'Your original marriage certificate. Bring the original and a photocopy. If issued in a non-Polish language, a sworn translation (tłumaczenie przysięgłe) by a certified Polish translator is required. Find certified translators at <a href="https://www.ms.gov.pl" target="_blank">ms.gov.pl</a>.' },
+    { pl: 'Akt urodzenia + kopia', en: 'Birth certificate + copy', ru: 'Свидетельство о рождении + копия', condition: 'IF_CHILD_OR_PARENT', source: 'Wnioskodawca', notes: 'For children or parents — confirms family relationship', info: 'Your original birth certificate confirming the family relationship with your sponsor in Poland. Bring original and photocopy. If in non-Polish language, a sworn translation is required. Find certified translators at <a href="https://www.ms.gov.pl" target="_blank">ms.gov.pl</a>.' },
+    { pl: 'Tłumaczenie przysięgłe aktu stanu cywilnego', en: 'Certified sworn translation of civil status document', ru: 'Присяжный перевод документа гражданского состояния', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'If marriage/birth certificate is not in Polish', info: 'Required when your marriage or birth certificate is in a foreign language. Must be done by a sworn (przysięgły) translator certified in Poland. Cost: approx. 100–200 PLN. Find certified translators at the Ministry of Justice registry: <a href="https://www.ms.gov.pl/pl/tlumacze-przysiegli/lista-tlumaczy-przysieglych/" target="_blank">ms.gov.pl/tlumacze-przysiegli</a>.' },
+    { pl: 'Paszport głównego wnioskodawcy (sponsora) + kopia', en: 'Sponsor passport + copy', ru: 'Паспорт спонсора (основного заявителя) + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Your family member\'s (sponsor\'s) passport. Bring original for inspection and a photocopy of the photo page and all stamped pages.' },
+    { pl: 'Karta pobytu głównego wnioskodawcy + kopia', en: 'Sponsor residence card + copy', ru: 'Карта побыта спонсора + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Required — confirms sponsor status in Poland', info: 'Your sponsor\'s TRC (Karta Pobytu). Original for inspection, photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt głównego wnioskodawcy + kopia', en: 'Sponsor residence decision + copy', ru: 'Решение о пребывании спонсора + копия', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Required — confirms sponsor\'s legal basis and duration', info: 'The administrative decision (decyzja) from your sponsor\'s TRC. Original and photocopy of all pages. This confirms how long the sponsor has held their residence and on what basis.' },
+    { pl: 'Dokument potwierdzający stabilny dochód', en: 'Document confirming stable income', ru: 'Документ, подтверждающий стабильный доход', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Confirms the sponsor or applicant has sufficient income to support the family. Accepted: employment contract, payslips (last 3 months), bank statement. The income should cover at least the minimum wage per family member (4,666 PLN gross/month in 2025 for the main earner, 823 PLN net for each additional family member).' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Rental agreement or property ownership document showing the family home. Must confirm address, monthly cost if rented, and that the property has sufficient space for the family. Notarised declaration from property owner also accepted.' },
+    { pl: 'Dokumenty potwierdzające wspólne zamieszkiwanie', en: 'Documents confirming cohabitation and joint household', ru: 'Документы, подтверждающие совместное проживание', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Joint photos, shared bank account, shared bills', info: 'Evidence of living together as a family unit. Accepted: joint photos from different periods showing you together, shared bank account statements, shared utility bills, shared lease/property. The more evidence the better — at least 2–3 different types of proof is recommended.' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Private insurance or ZUS', info: 'Must cover full intended stay. Private insurance (PZU, Allianz, Generali) or ZUS registration (if employed). Policy in your name with dates and coverage. Minimum recommended: €30,000.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for this application type is <strong>340 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts). <br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Karta pobytu + ksero', en: 'Your own residence card + copy', ru: 'Ваша карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'If you currently hold a TRC yourself, bring it with a photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Your own residence decision + copy', ru: 'Ваше решение о пребывании + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'If you hold a TRC, bring the associated decision and a photocopy of all pages.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'Include PESEL confirmation document and copy if you have one.' },
   ],
   'CT-09': [
-    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)' },
-    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible' },
-    { pl: 'Dokumenty potwierdzające okoliczności', en: 'Documents confirming your specific circumstances', ru: 'Документы, подтверждающие обстоятельства', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Specific to your situation — consult your advisor' },
-    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Dokument potwierdzający środki finansowe', en: 'Document confirming financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null },
-    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null },
-    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null },
+    { pl: 'Wniosek o pobyt czasowy', en: 'Temporary residence permit application', ru: 'Заявление', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 egzemplarze (2 copies required)', info: 'Fill in and submit via the MOS portal: <a href="https://mos.cudzoziemcy.gov.pl/en/wniosek" target="_blank">mos.cudzoziemcy.gov.pl/en/wniosek</a> (English, Ukrainian, Russian available). Select "inne okoliczności" (other circumstances). Print 2 copies, complete in Polish block capitals, sign both.' },
+    { pl: 'Ważny paszport + kopia wszystkich stron z pieczątkami', en: 'Valid passport + copy of all pages with stamps', ru: 'Паспорт + копии всех страниц с отметками', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Passport valid for full intended stay. Photocopy all stamped/visa/entry pages.' },
+    { pl: 'Zdjęcia', en: 'Photos', ru: 'Фото', condition: 'ALWAYS', source: 'Wnioskodawca', notes: '2 photos, 3.5×4.5 cm, 80% face visible', info: '2 photographs, 3.5×4.5 cm. Light background, face 70–80% of frame. Taken within last 6 months.' },
+    { pl: 'Dokumenty potwierdzające okoliczności', en: 'Documents confirming your specific circumstances', ru: 'Документы, подтверждающие обстоятельства', condition: 'ALWAYS', source: 'Wnioskodawca', notes: 'Specific to your situation — will be assessed individually', info: 'The exact documents depend on your specific circumstances and will be confirmed after an individual assessment by a legalization expert. This may include: enrolment confirmation (if studying), cohabitation declaration and relationship proof (if with a partner), relationship documents (if joining a parent or child), or medical documents (if for treatment). Do not submit your application without consulting an advisor first for this category.' },
+    { pl: 'Dokument potwierdzający miejsce zamieszkania', en: 'Proof of accommodation', ru: 'Документ, подтверждающий место проживания', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Rental agreement showing your name, address, monthly cost, and duration. Dormitory: admin confirmation. Staying with others: notarised declaration from property owner and their ID copy.' },
+    { pl: 'Ubezpieczenie zdrowotne', en: 'Health insurance', ru: 'Медицинская страховка', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Private health insurance covering your full stay. Policy in your name, dates visible, minimum €30,000 coverage. Providers: PZU, Allianz, AXA, Generali.' },
+    { pl: 'Dokument potwierdzający środki finansowe', en: 'Document confirming financial means', ru: 'Документ, подтверждающий наличие финансовых средств', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'Bank statement issued within last month showing your name and sufficient balance. Minimum ~1,010 PLN/month for living, plus rent and return ticket costs. Recommend showing at least 12,000–15,000 PLN total.' },
+    { pl: 'Potwierdzenie opłaty skarbowej 340 złotych', en: 'Stamp duty payment confirmation 340 PLN', ru: 'Подтверждение оплаты гербового сбора 340 злотых', condition: 'ALWAYS', source: 'Wnioskodawca', notes: null, info: 'The stamp duty for this application type is <strong>340 PLN</strong>. Payment must be made to your Voivodeship Office bank account — this is <strong>different in every city in Poland</strong> (Warsaw, Kraków, Wrocław, Gdańsk etc. all have different accounts). <br><br>⚠️ <strong>Do not use any account number found online.</strong> Before making payment, confirm the correct account number with your local Voivodeship Office website or contact us at KartaFlow. Paying to the wrong account can delay your application and refunds are not automatic.<br><br>Alongside this fee, you will also pay a separate <strong>100 PLN card issuance fee</strong> when collecting your decision — this goes to a different account and you will be informed at that stage.' },
+    { pl: 'Karta pobytu + ksero', en: 'Residence card + copy', ru: 'Карта побыта + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'If you currently hold a TRC, bring original and photocopy of both sides.' },
+    { pl: 'Decyzja na pobyt + ksero', en: 'Residence decision + copy', ru: 'Решение по карте + копия', condition: 'IF_ON_TRC', source: 'Wnioskodawca', notes: null, info: 'If you hold a TRC, bring the associated decision and photocopy of all pages.' },
+    { pl: 'Numer PESEL + kopia', en: 'PESEL number + copy', ru: 'Номер PESEL + копия', condition: 'IF_AVAILABLE', source: 'Wnioskodawca', notes: null, info: 'Include PESEL confirmation and copy if you have one.' },
   ]
 };
 
@@ -1214,27 +1422,26 @@ function getQuestions() {
       options: [
         { value: 'study', label: { en: 'Study (Uczelnia / Szkoła)', pl: 'Nauka (Uczelnia / Szkoła)', ru: 'Учёба (университет / школа)' } },
         { value: 'work', label: { en: 'Work (Praca)', pl: 'Praca', ru: 'Работа' } },
+        { value: 'graduate', label: { en: 'Graduate job search — Art. 144 (Absolwent)', pl: 'Poszukiwanie pracy po studiach — Art. 144', ru: 'Поиск работы после учёбы — Ст. 144 (Absolwent)' } },
         { value: 'family', label: { en: 'Family reunification (Łączenie rodzin)', pl: 'Łączenie rodzin', ru: 'Воссоединение семьи' } },
         { value: 'other_circumstances', label: { en: 'Other circumstances', pl: 'Inne okoliczności', ru: 'Иные обстоятельства' } },
         { value: 'business', label: { en: 'Business (Działalność gospodarcza)', pl: 'Działalność gospodarcza', ru: 'Предпринимательская деятельность' } },
       ]
     },
     {
-      id: 'studyType', type: 'choice',
-      question: { en: 'What type of educational institution do you attend?', pl: 'Jaki typ uczelni / szkoły?', ru: 'Какой тип учебного заведения?' },
-      purpose: { en: 'The institution type affects which documents you need from your school.', pl: 'Typ placówki wpływa na wymagane dokumenty ze szkoły.', ru: 'Тип учебного заведения влияет на необходимые документы.' },
+      id: 'studyStatus', type: 'choice',
+      question: { en: 'What is your study status?', pl: 'Jaki jest Twój status studenta?', ru: 'Каков ваш статус студента?' },
+      purpose: { en: 'Determines which university documents you need — different documents are required for new vs continuing students.', pl: 'Określa wymagane dokumenty z uczelni — różnią się dla nowych i kontynuujących studentów.', ru: 'Определяет необходимые документы из университета — они различаются для новых и продолжающих обучение студентов.' },
       showWhen: () => answers.targetBasis === 'study',
       options: [
-        { value: 'university', label: { en: 'University (Uczelnia wyższa)', pl: 'Uczelnia wyższa', ru: 'Университет' } },
-        { value: 'postsecondary', label: { en: 'Post-secondary school (Szkoła policealna)', pl: 'Szkoła policealna', ru: 'Полицеальная школа' } },
-        { value: 'language', label: { en: 'Language course (Kurs językowy)', pl: 'Kurs językowy', ru: 'Языковые курсы' } },
-        { value: 'other_course', label: { en: 'Other course', pl: 'Inny kurs', ru: 'Другие курсы' } },
+        { value: 'new_student', label: { en: 'New student — starting my first year or a new programme', pl: 'Nowy student — zaczynam pierwszy rok lub nowy program', ru: 'Новый студент — начинаю первый курс или новую программу' } },
+        { value: 'continuing_student', label: { en: 'Continuing student — already enrolled, renewing my TRC', pl: 'Kontynuuję studia — jestem już zapisany/a, przedłużam kartę', ru: 'Продолжаю обучение — уже зачислен(а), продлеваю карту' } },
       ]
     },
     {
       id: 'studyContinue', type: 'choice',
       question: { en: 'Are you continuing your studies or starting a new programme?', pl: 'Czy kontynuujesz studia, czy zaczynasz nowy program?', ru: 'Вы продолжаете учёбу или начинаете новую программу?' },
-      purpose: { en: 'Determines whether this is a renewal (extension) or a new application.', pl: 'Czy to przedłużenie czy nowy wniosek.', ru: 'Определяет, является ли это продлением или новой заявкой.' },
+      purpose: { en: 'Determines the exact set of university documents required for your renewal application.', pl: 'Określa dokładne dokumenty z uczelni potrzebne do odnowienia.', ru: 'Определяет точный набор университетских документов для продления.' },
       showWhen: () => answers.currentStatus === 'trc_study' && answers.targetBasis === 'study',
       options: [
         { value: 'continuing', label: { en: 'Continuing studies (same programme)', pl: 'Kontynuuję studia (ten sam program)', ru: 'Продолжаю обучение (та же программа)' } },
@@ -1242,9 +1449,19 @@ function getQuestions() {
       ]
     },
     {
+      id: 'workProcedureType', type: 'choice',
+      question: { en: 'What would you like to apply for?', pl: 'O co chcesz się ubiegać?', ru: 'На что вы хотите подать заявление?' },
+      purpose: { en: 'These are two different legal procedures with different documents and fees. Choose based on your situation.', pl: 'To są dwie różne procedury prawne z różnymi dokumentami i opłatami.', ru: 'Это две разные правовые процедуры с разными документами и сборами.' },
+      showWhen: () => answers.currentStatus === 'trc_work' && answers.targetBasis === 'work',
+      options: [
+        { value: 'renewal', label: { en: 'Work TRC renewal (new residence permit based on employment)', pl: 'Przedłużenie Karty Pobytu (praca) — nowe zezwolenie', ru: 'Продление КВП (работа) — новое разрешение на пребывание' } },
+        { value: 'change_decision', label: { en: 'Change of decision (Zmiana decyzji) — I changed employer and need to update my permit', pl: 'Zmiana decyzji — zmieniłem/am pracodawcę i muszę zaktualizować decyzję', ru: 'Изменение решения (Zmiana decyzji) — я сменил(а) работодателя и должен(а) обновить разрешение' } },
+      ]
+    },
+    {
       id: 'hasGraduated', type: 'choice',
       question: { en: 'Have you already graduated from your studies in Poland?', pl: 'Czy ukończyłeś już studia w Polsce?', ru: 'Вы уже окончили учёбу в Польше?' },
-      purpose: { en: 'If you have graduated, you may be eligible for a graduate job-search permit (Article 144) — we will present your options before deciding.', pl: 'Jeśli ukończyłeś studia, możesz być uprawniony do zezwolenia dla absolwentów (Art. 144).', ru: 'Если вы окончили учёбу, вы можете иметь право на разрешение для выпускников (ст. 144).' },
+      purpose: { en: 'If you have graduated from a Polish university, you may qualify for a graduate TRC (Art. 144) without needing an employer yet.', pl: 'Jeśli ukończyłeś polską uczelnię, możesz kwalifikować się do karty dla absolwentów (Art. 144).', ru: 'Если вы окончили польский университет, вы можете претендовать на карту для выпускников (ст. 144).' },
       showWhen: () => answers.targetBasis === 'work' && (answers.currentStatus === 'trc_study' || answers.currentStatus === 'student_visa' || answers.currentStatus === 'other_visa'),
       options: [
         { value: 'yes', label: { en: 'Yes, I have my diploma / I have graduated', pl: 'Tak, ukończyłem/am studia', ru: 'Да, я окончил(а) учёбу' } },
@@ -1273,7 +1490,7 @@ function getQuestions() {
       id: 'hasEmployer', type: 'choice',
       question: { en: 'Do you currently have an employer in Poland?', pl: 'Czy masz teraz pracodawcę w Polsce?', ru: 'Есть ли у вас сейчас работодатель в Польше?' },
       purpose: { en: 'You need an active employer to apply on a work basis.', pl: 'Do wniosku na podstawie pracy potrzebujesz aktywnego pracodawcy.', ru: 'Для подачи на основании работы вам нужен действующий работодатель.' },
-      showWhen: () => answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      showWhen: () => answers.targetBasis === 'work' && answers.hasGraduated !== 'yes' && answers.workProcedureType !== 'change_decision',
       options: [
         { value: 'yes', label: { en: 'Yes, I have an employer', pl: 'Tak, mam pracodawcę', ru: 'Да, у меня есть работодатель' } },
         { value: 'no', label: { en: 'No employer yet', pl: 'Nie, nie mam pracodawcy', ru: 'Нет работодателя' } },
@@ -1281,30 +1498,19 @@ function getQuestions() {
     },
     {
       id: 'changedEmployer', type: 'choice',
-      question: { en: 'Did you change your employer during your previous work residence card?', pl: 'Czy zmieniałeś pracodawcę w trakcie poprzedniej karty pobytowej?', ru: 'Меняли ли вы работодателя в период действия предыдущей карты?' },
-      purpose: { en: 'Changing employer during TRC validity has legal implications that may affect your case type.', pl: 'Zmiana pracodawcy w trakcie ważności karty ma implikacje prawne.', ru: 'Смена работодателя в период действия КВП имеет юридические последствия.' },
-      showWhen: () => answers.currentStatus === 'trc_work' && answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      question: { en: 'Did you change your employer during your current work residence card?', pl: 'Czy zmieniałeś pracodawcę w trakcie obecnej karty pobytowej?', ru: 'Меняли ли вы работодателя в период действия текущей карты?' },
+      purpose: { en: 'This determines whether additional documents are needed regarding the employer change.', pl: 'Określa czy potrzebne są dodatkowe dokumenty dotyczące zmiany pracodawcy.', ru: 'Определяет, нужны ли дополнительные документы по смене работодателя.' },
+      showWhen: () => answers.workProcedureType === 'change_decision',
       options: [
         { value: 'yes', label: { en: 'Yes, I changed employer', pl: 'Tak, zmieniłem/am pracodawcę', ru: 'Да, я сменил(а) работодателя' } },
         { value: 'no', label: { en: 'No, same employer throughout', pl: 'Nie, ten sam pracodawca', ru: 'Нет, тот же работодатель' } },
       ]
     },
     {
-      id: 'notifiedVoivode', type: 'choice',
-      question: { en: 'Did you inform the Voivode (Urząd Wojewódzki) about the employer change?', pl: 'Czy poinformowałeś Urząd Wojewódzki o zmianie pracodawcy?', ru: 'Сообщали ли вы Воеводе об изменении работодателя?' },
-      purpose: { en: 'Failing to notify the Voivode about an employer change may complicate your case and affect which procedure applies.', pl: 'Brak powiadomienia może skomplikować sprawę.', ru: 'Отсутствие уведомления может осложнить дело.' },
-      showWhen: () => answers.changedEmployer === 'yes',
-      options: [
-        { value: 'yes', label: { en: 'Yes, I notified the Voivode', pl: 'Tak, powiadomiłem/am Urząd', ru: 'Да, я уведомил(а) Воеводу' } },
-        { value: 'no', label: { en: 'No, I did not notify', pl: 'Nie, nie powiadomiłem/am', ru: 'Нет, не уведомлял(а)' } },
-        { value: 'not_sure', label: { en: 'Not sure', pl: 'Nie jestem pewny/a', ru: 'Не уверен(а)' } },
-      ]
-    },
-    {
       id: 'employerInDecyzja', type: 'choice',
-      question: { en: 'Is a specific employer listed in your current residence decision (decyzja)?', pl: 'Czy w Twojej decyzji pobytowej jest wymieniony konkretny pracodawca?', ru: 'Указан ли конкретный работодатель в вашем решении о пребывании (decyzja)?' },
-      purpose: { en: 'If your employer is named in the decyzja, changing jobs requires a change-of-decision application — a different procedure from a standard renewal.', pl: 'Jeśli pracodawca jest w decyzji, zmiana pracy wymaga wniosku o zmianę decyzji.', ru: 'Если работодатель указан в решении, смена работы требует заявления об изменении решения.' },
-      showWhen: () => answers.currentStatus === 'trc_work' && answers.targetBasis === 'work' && answers.hasGraduated !== 'yes',
+      question: { en: 'Is a specific employer listed in your current residence decision (decyzja)?', pl: 'Czy w Twojej decyzji pobytowej jest wymieniony konkretny pracodawca?', ru: 'Указан ли конкретный работодатель в вашем текущем решении о пребывании (decyzja)?' },
+      purpose: { en: 'If your employer is named in the decyzja, you need a change-of-decision procedure. If not, a standard renewal may be possible.', pl: 'Jeśli pracodawca jest w decyzji, potrzebna jest zmiana decyzji.', ru: 'Если работодатель указан в решении, требуется процедура изменения решения.' },
+      showWhen: () => answers.workProcedureType === 'change_decision',
       options: [
         { value: 'yes', label: { en: 'Yes, employer is listed in the decyzja', pl: 'Tak, pracodawca jest wskazany w decyzji', ru: 'Да, работодатель указан в решении' } },
         { value: 'no', label: { en: 'No, no specific employer listed', pl: 'Nie, pracodawca nie jest wskazany', ru: 'Нет, конкретный работодатель не указан' } },
@@ -1314,22 +1520,39 @@ function getQuestions() {
     {
       id: 'familyMember', type: 'choice',
       question: { en: 'Who are you joining in Poland?', pl: 'Do kogo dołączasz w Polsce?', ru: 'К кому вы присоединяетесь в Польше?' },
-      purpose: { en: 'The relationship to the main applicant (sponsor) determines required supporting documents.', pl: 'Relacja z głównym wnioskodawcą wpływa na wymagane dokumenty.', ru: 'Отношения с основным заявителем определяют необходимые документы.' },
+      purpose: { en: 'The relationship determines your eligibility for family reunification and the required documents.', pl: 'Relacja określa kwalifikowalność do łączenia rodzin i wymagane dokumenty.', ru: 'Отношения определяют право на воссоединение семьи и необходимые документы.' },
       showWhen: () => answers.targetBasis === 'family',
       options: [
-        { value: 'spouse', label: { en: 'Spouse / partner', pl: 'Małżonek / partner', ru: 'Супруг(а) / партнёр' } },
+        { value: 'spouse', label: { en: 'Spouse', pl: 'Małżonek', ru: 'Супруг(а)' } },
+        { value: 'child', label: { en: 'Minor child', pl: 'Małoletnie dziecko', ru: 'Несовершеннолетний ребёнок' } },
         { value: 'parent', label: { en: 'Parent', pl: 'Rodzic', ru: 'Родитель' } },
-        { value: 'child', label: { en: 'Child', pl: 'Dziecko', ru: 'Ребёнок' } },
+        { value: 'partner', label: { en: 'Partner (unmarried)', pl: 'Partner (związek nieformalny)', ru: 'Партнёр (неофициальные отношения)' } },
       ]
     },
     {
-      id: 'sponsorTrcDuration', type: 'choice',
-      question: { en: 'Does your family member (sponsor) in Poland already hold a residence card for more than 2 years?', pl: 'Czy Twój główny wnioskodawca ma kartę pobytu od ponad 2 lat?', ru: 'Имеет ли основной заявитель карту пребывания более 2 лет?' },
-      purpose: { en: 'This affects your eligibility and the type of family reunification application.', pl: 'Wpływa na kwalifikowalność i typ wniosku.', ru: 'Это влияет на ваше право на воссоединение семьи.' },
-      showWhen: () => answers.familyMember === 'spouse',
+      id: 'sponsorStatus', type: 'choice',
+      question: { en: 'What is the legal status of your family member (sponsor) in Poland?', pl: 'Jaki jest status prawny Twojego członka rodziny (sponsora) w Polsce?', ru: 'Каков правовой статус вашего члена семьи (спонсора) в Польше?' },
+      purpose: { en: 'Family reunification applies only when the sponsor meets specific residence requirements. This determines whether you qualify for CT-08 or need to apply under other circumstances.', pl: 'Łączenie rodzin stosuje się tylko gdy sponsor spełnia wymogi pobytowe. Określa czy kwalifikujesz się do CT-08.', ru: 'Воссоединение семьи применяется только когда спонсор соответствует требованиям. Определяет, имеете ли вы право на CT-08.' },
+      showWhen: () => answers.familyMember === 'spouse' || answers.familyMember === 'child',
       options: [
-        { value: 'yes', label: { en: 'Yes, more than 2 years', pl: 'Tak, ponad 2 lata', ru: 'Да, более 2 лет' } },
-        { value: 'no', label: { en: 'No, less than 2 years', pl: 'Nie, mniej niż 2 lata', ru: 'Нет, менее 2 лет' } },
+        { value: 'trc_2plus', label: { en: 'Temporary residence permit (TRC) held for more than 2 years', pl: 'Karta Pobytu od ponad 2 lat', ru: 'Разрешение на временное проживание (КВП) более 2 лет' } },
+        { value: 'permanent', label: { en: 'Permanent residence permit (karta stałego pobytu)', pl: 'Karta stałego pobytu', ru: 'Постоянное разрешение на проживание' } },
+        { value: 'eu_resident', label: { en: 'EU long-term resident card (rezydent długoterminowy UE)', pl: 'Karta rezydenta długoterminowego UE', ru: 'Карта долгосрочного резидента ЕС' } },
+        { value: 'polish_citizen', label: { en: 'Polish citizen', pl: 'Obywatel Polski', ru: 'Гражданин Польши' } },
+        { value: 'less_than_2', label: { en: 'TRC held for less than 2 years', pl: 'Karta Pobytu krócej niż 2 lata', ru: 'КВП менее 2 лет' } },
+        { value: 'not_sure', label: { en: 'Not sure / other', pl: 'Nie wiem / inne', ru: 'Не уверен(а) / другое' } },
+      ]
+    },
+    {
+      id: 'otherCircumstancesType', type: 'choice',
+      question: { en: 'What are your specific circumstances?', pl: 'Jakie są Twoje konkretne okoliczności?', ru: 'Каковы ваши конкретные обстоятельства?' },
+      purpose: { en: 'This helps us understand your situation. Additional required documents will be confirmed individually by a legalization expert.', pl: 'Pomaga nam zrozumieć Twoją sytuację. Dodatkowe dokumenty zostaną potwierdzone indywidualnie.', ru: 'Это помогает понять вашу ситуацию. Дополнительные документы будут подтверждены индивидуально.' },
+      showWhen: () => answers.targetBasis === 'other_circumstances' || answers.familyMember === 'parent' || answers.familyMember === 'partner' || (( answers.familyMember === 'spouse' || answers.familyMember === 'child') && (answers.sponsorStatus === 'less_than_2' || answers.sponsorStatus === 'not_sure')),
+      options: [
+        { value: 'postsecondary', label: { en: 'Studying at a post-secondary school, language course, or lycée', pl: 'Nauka w szkole policealnej, kursie językowym lub liceum', ru: 'Обучение в полицеальной школе, языковом курсе или лицее' } },
+        { value: 'partner', label: { en: 'Living with a partner (unmarried relationship)', pl: 'Zamieszkanie z partnerem (związek nieformalny)', ru: 'Проживание с партнёром (неофициальные отношения)' } },
+        { value: 'family_other', label: { en: 'Living with a child or parent', pl: 'Zamieszkanie z dzieckiem lub rodzicem', ru: 'Проживание с ребёнком или родителем' } },
+        { value: 'other_specify', label: { en: 'Other (medical treatment, volunteer work, etc.)', pl: 'Inne (leczenie, wolontariat itp.)', ru: 'Другое (лечение, волонтёрство и т.д.)' } },
       ]
     },
   ];
@@ -1340,10 +1563,13 @@ function assignCase() {
   const cs = answers.currentStatus;
   const tb = answers.targetBasis;
 
-  if (tb === 'family') return 'CT-08';
-  if (tb === 'other_circumstances' || tb === 'business') return 'CT-09';
+  // Business → consultation redirect (handled in renderResults)
+  if (tb === 'business') return 'BUSINESS';
 
-  // Graduate explicit choice
+  // Graduate direct selection from Q3
+  if (tb === 'graduate') return 'CT-03';
+
+  // Graduate via work flow decision point
   if (answers.graduateChoice === 'CT-03') return 'CT-03';
   if (answers.graduateChoice === 'CT-04') return 'CT-04';
 
@@ -1353,13 +1579,25 @@ function assignCase() {
   }
 
   if (tb === 'work') {
-    if (cs === 'trc_study') return 'CT-04';
+    // trc_work holder chose procedure explicitly
     if (cs === 'trc_work') {
-      if (answers.changedEmployer === 'yes' && answers.employerInDecyzja === 'yes') return 'CT-07';
+      if (answers.workProcedureType === 'change_decision') return 'CT-07';
       return 'CT-06';
     }
+    if (cs === 'trc_study') return 'CT-04';
     return 'CT-05';
   }
+
+  if (tb === 'family') {
+    // Parent or partner → other circumstances
+    if (answers.familyMember === 'parent' || answers.familyMember === 'partner') return 'CT-09';
+    // Spouse/child with insufficient sponsor status → other circumstances
+    if (answers.sponsorStatus === 'less_than_2' || answers.sponsorStatus === 'not_sure') return 'CT-09';
+    // Qualified family reunification
+    return 'CT-08';
+  }
+
+  if (tb === 'other_circumstances') return 'CT-09';
 
   return 'CT-09';
 }
@@ -1492,9 +1730,16 @@ function renderChoiceOptions(q, grid) {
     btn.onclick = () => {
       answers[q.id] = opt.value;
       if (q.id === 'currentStatus' || q.id === 'targetBasis') {
-        ['studyType','studyContinue','hasEmployer','hasGraduated','graduateChoice',
-         'changedEmployer','notifiedVoivode','employerInDecyzja','familyMember','sponsorTrcDuration'
+        ['studyStatus','studyContinue','studyType','hasEmployer','hasGraduated','graduateChoice',
+         'workProcedureType','changedEmployer','employerInDecyzja',
+         'familyMember','sponsorStatus','otherCircumstancesType'
         ].forEach(k => delete answers[k]);
+      }
+      if (q.id === 'familyMember') {
+        ['sponsorStatus','otherCircumstancesType'].forEach(k => delete answers[k]);
+      }
+      if (q.id === 'workProcedureType') {
+        ['changedEmployer','employerInDecyzja','hasEmployer'].forEach(k => delete answers[k]);
       }
       render();
     };
@@ -1590,6 +1835,30 @@ function renderGraduateDecision(q, grid) {
 }
 
 function renderResults(c, caseId) {
+  // ── Business consultation redirect ──────────────────────────────────────
+  if (caseId === 'BUSINESS') {
+    const biz = document.createElement('div');
+    biz.className = 'case-result';
+    biz.style.cssText = 'text-align:center;padding:40px 24px;';
+    biz.innerHTML =
+      '<div style="font-size:40px;margin-bottom:16px;">🏢</div>' +
+      '<div class="case-result-name" style="margin-bottom:12px;">Business-based TRC</div>' +
+      '<div class="case-result-explanation" style="margin-bottom:28px;">Business applications involve a large number of documents that vary significantly depending on the type of business activity, company structure, and individual circumstances. This case requires individual assessment by a legalization expert — it cannot be fully covered by an automated checklist.</div>' +
+      '<a href="mailto:info@kartaflow.pl" style="display:inline-block;background:var(--red);color:#fff;padding:14px 32px;border-radius:var(--radius-pill);font-weight:600;font-size:15px;text-decoration:none;margin-bottom:12px;">Contact us for individual consultation</a>' +
+      '<div style="font-size:13px;color:var(--text-3);margin-top:8px;">Our legal team will assess your case and prepare a personalised document list</div>';
+    c.appendChild(biz);
+    const backBtnBiz = document.createElement('button');
+    backBtnBiz.className = 'btn btn-ghost';
+    backBtnBiz.style.cssText = 'width:100%;margin-top:20px;';
+    backBtnBiz.textContent = '← ' + tx('backBtn');
+    backBtnBiz.onclick = () => { currentStep = activeQuestions().length - 1; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    c.appendChild(backBtnBiz);
+    return;
+  }
+
+  // ── CT-09 other circumstances notice ────────────────────────────────────
+  const isOtherCircumstances = caseId === 'CT-09';
+
   const caseName = getCaseName(caseId);
   const explanation = T.caseExplanations[caseId] || {};
   const qs = getQuestions();
@@ -1602,7 +1871,12 @@ function renderResults(c, caseId) {
 
   const eyebrow = document.createElement('div');
   eyebrow.className = 'case-result-eyebrow';
-  eyebrow.textContent = caseId + ' — ' + tx('caseAssigned');
+  eyebrow.innerHTML =
+    '<span class="case-result-eyebrow-badge">' +
+      '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      tx('caseAssigned') +
+    '</span>' +
+    '<span class="case-result-eyebrow-id">' + caseId + '</span>';
   resultCard.appendChild(eyebrow);
 
   const name = document.createElement('div');
@@ -1627,25 +1901,51 @@ function renderResults(c, caseId) {
   if (caseId === 'CT-07') {
     const warn = document.createElement('div');
     warn.className = 'warning-card';
-    warn.innerHTML = '<strong>⚠ Note:</strong> You have been assigned to <strong>Change of Work Decision</strong> because you changed your employer while they were named in your existing residence decision. The stamp duty for this procedure is <strong>220 PLN</strong> (not 340 PLN). Please consult your advisor about the notification obligation.';
+    warn.innerHTML = '<strong>⚠ Note:</strong> You selected <strong>Change of Work Decision (Zmiana Decyzji)</strong>. The stamp duty for this procedure is <strong>220 PLN</strong> — not the standard 440 PLN. Please ensure you are applying for the correct procedure — if in doubt, consult a legalization expert before submitting.';
     resultCard.appendChild(warn);
+  }
+
+  if (isOtherCircumstances) {
+    const notice = document.createElement('div');
+    notice.className = 'warning-card';
+    notice.style.cssText = 'background:var(--red-soft);border:1px solid rgba(232,19,42,0.15);padding:16px;border-radius:var(--radius-sm);margin-top:12px;font-size:13px;line-height:1.6;';
+    notice.innerHTML = '<strong>ℹ Individual assessment required</strong><br>The base document list below applies to your case. However, <strong>additional required documents will be confirmed after an individual assessment</strong> of your specific circumstances by a legalization expert. Do not submit your application without consulting an advisor first.';
+    resultCard.appendChild(notice);
   }
 
   c.appendChild(resultCard);
 
-  // Documents section
-  const docs = DOCUMENT_MATRIX[caseId] || [];
-  const mandatory = docs.filter(d => d.condition === 'ALWAYS');
-  const conditional = docs.filter(d => d.condition !== 'ALWAYS' && d.condition !== 'IF_AVAILABLE');
+  // ── Filter documents based on answers ───────────────────────────────────
+  let docs = (DOCUMENT_MATRIX[caseId] || []).filter(doc => {
+    // CT-01: filter by studyStatus (new vs continuing)
+    if (caseId === 'CT-01') {
+      if (doc.condition === 'IF_NEW_STUDENT') return answers.studyStatus === 'new_student';
+      if (doc.condition === 'IF_CONTINUING_STUDENT') return answers.studyStatus === 'continuing_student';
+    }
+    // CT-02: filter by studyContinue (new programme vs continuing)
+    if (caseId === 'CT-02') {
+      if (doc.condition === 'IF_NEW_PROGRAMME') return answers.studyContinue === 'new_programme';
+      if (doc.condition === 'IF_CONTINUING_PROGRAMME') return answers.studyContinue === 'continuing';
+    }
+    // CT-08: filter marriage cert vs birth cert by familyMember
+    if (caseId === 'CT-08') {
+      if (doc.condition === 'IF_SPOUSE') return answers.familyMember === 'spouse';
+      if (doc.condition === 'IF_CHILD_OR_PARENT') return answers.familyMember === 'child' || answers.familyMember === 'parent';
+    }
+    return true;
+  });
+
+  const mandatory = docs.filter(d => d.condition === 'ALWAYS' || d.condition === 'IF_NEW_STUDENT' || d.condition === 'IF_CONTINUING_STUDENT' || d.condition === 'IF_NEW_PROGRAMME' || d.condition === 'IF_CONTINUING_PROGRAMME' || d.condition === 'IF_SPOUSE' || d.condition === 'IF_CHILD_OR_PARENT');
+  const conditional = docs.filter(d => !['ALWAYS','IF_AVAILABLE','IF_NEW_STUDENT','IF_CONTINUING_STUDENT','IF_NEW_PROGRAMME','IF_CONTINUING_PROGRAMME','IF_SPOUSE','IF_CHILD_OR_PARENT'].includes(d.condition));
   const optional = docs.filter(d => d.condition === 'IF_AVAILABLE');
 
   const divider = document.createElement('div');
   divider.className = 'section-divider';
-  divider.innerHTML = '<div class="section-line"></div><div class="section-label">📄 ' + tx('documentsTitle') + '</div><div class="section-line"></div>';
+  divider.innerHTML = '<div class="section-line"></div><div class="section-label" style="color:var(--text-2);font-size:10.5px;">📄 ' + tx('documentsTitle') + '</div><div class="section-line"></div>';
   c.appendChild(divider);
 
   const sub = document.createElement('div');
-  sub.style.cssText = 'font-size:13px;color:var(--text-2);margin-bottom:24px;line-height:1.6;padding:0 12px;';
+  sub.style.cssText = 'font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.6;padding:0 12px;';
   sub.textContent = tx('documentsSubtitle');
   c.appendChild(sub);
 
@@ -1660,7 +1960,11 @@ function renderResults(c, caseId) {
     docList.forEach(doc => {
       const cond = CONDITIONS[doc.condition] || CONDITIONS.ALWAYS;
       const item = document.createElement('div');
-      item.className = 'doc-item';
+      const catClass = cond.dotCls === 'doc-dot-mandatory' ? 'doc-item-mandatory' :
+                       cond.dotCls === 'doc-dot-conditional' ? 'doc-item-conditional' :
+                       'doc-item-optional';
+      item.className = 'doc-item ' + catClass;
+      item.style.cssText = 'cursor:default;';
 
       const dot = document.createElement('div');
       dot.className = 'doc-dot ' + cond.dotCls;
@@ -1668,6 +1972,7 @@ function renderResults(c, caseId) {
 
       const body = document.createElement('div');
       body.className = 'doc-body';
+      body.style.cssText = 'flex:1;min-width:0;';
 
       const nameEn = document.createElement('div');
       nameEn.className = 'doc-name-en';
@@ -1679,24 +1984,16 @@ function renderResults(c, caseId) {
       namePl.textContent = '🇵🇱 ' + doc.pl;
       body.appendChild(namePl);
 
-      const nameRu = document.createElement('div');
-      nameRu.className = 'doc-name-ru';
-      nameRu.textContent = '🇷🇺 ' + doc.ru;
-      body.appendChild(nameRu);
-
       const tags = document.createElement('div');
       tags.className = 'doc-tags';
-
       const condTag = document.createElement('span');
       condTag.className = 'doc-tag ' + cond.cls;
       condTag.textContent = cond[lang] || cond.en;
       tags.appendChild(condTag);
-
       const srcTag = document.createElement('span');
       srcTag.className = 'doc-tag tag-source';
       srcTag.textContent = '📋 ' + doc.source;
       tags.appendChild(srcTag);
-
       body.appendChild(tags);
 
       if (doc.notes) {
@@ -1704,6 +2001,51 @@ function renderResults(c, caseId) {
         notes.className = 'doc-notes';
         notes.textContent = 'ℹ ' + doc.notes;
         body.appendChild(notes);
+      }
+
+      // Accordion info panel
+      if (doc.info) {
+        const infoToggle = document.createElement('button');
+        infoToggle.style.cssText = [
+          'margin-top:10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;',
+          'background:linear-gradient(135deg,rgba(232,19,42,0.07) 0%,rgba(232,19,42,0.03) 100%);',
+          'border:0.5px solid rgba(232,19,42,0.2);border-radius:100px;',
+          'padding:5px 14px 5px 10px;font-size:12px;font-weight:600;',
+          'color:var(--red);-webkit-tap-highlight-color:transparent;',
+          'transition:all 0.18s;letter-spacing:0.01em;',
+        ].join('');
+        const infoLabelText = getInfoLabel(doc.en); infoToggle.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 6.3v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="4.2" r="0.7" fill="currentColor"/></svg> ' + infoLabelText;
+        infoToggle.onmouseover = () => { infoToggle.style.background = 'linear-gradient(135deg,rgba(232,19,42,0.12) 0%,rgba(232,19,42,0.06) 100%)'; };
+        infoToggle.onmouseout = () => { infoToggle.style.background = 'linear-gradient(135deg,rgba(232,19,42,0.07) 0%,rgba(232,19,42,0.03) 100%)'; };
+        const infoPanel = document.createElement('div');
+        infoPanel.style.cssText = [
+          'display:none;margin-top:10px;padding:14px 16px;',
+          'background:rgba(255,255,255,0.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);',
+          'border-radius:12px;font-size:13px;color:var(--text-2);line-height:1.7;',
+          'border:0.5px solid rgba(232,19,42,0.12);',
+          'box-shadow:0 2px 12px rgba(0,0,0,0.06);',
+          'animation:panelIn 0.22s cubic-bezier(0.34,1.3,0.64,1) both;',
+        ].join('');
+        infoPanel.innerHTML = doc.info;
+        let open = false;
+        infoToggle.onclick = (e) => {
+          e.stopPropagation();
+          open = !open;
+          infoPanel.style.display = open ? 'block' : 'none';
+          if (open) {
+            infoToggle.style.background = 'linear-gradient(135deg,rgba(10,10,10,0.92) 0%,rgba(30,10,12,0.95) 100%)';
+            infoToggle.style.borderColor = 'transparent';
+            infoToggle.style.color = '#fff';
+            infoToggle.innerHTML = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Close';
+          } else {
+            infoToggle.style.background = 'linear-gradient(135deg,rgba(232,19,42,0.07) 0%,rgba(232,19,42,0.03) 100%)';
+            infoToggle.style.borderColor = 'rgba(232,19,42,0.2)';
+            infoToggle.style.color = 'var(--red)';
+            const infoLabelText = getInfoLabel(doc.en); infoToggle.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 6.3v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="4.2" r="0.7" fill="currentColor"/></svg> ' + infoLabelText;
+          }
+        };
+        body.appendChild(infoToggle);
+        body.appendChild(infoPanel);
       }
 
       item.appendChild(body);
@@ -1716,6 +2058,7 @@ function renderResults(c, caseId) {
   renderDocGroup(conditional, tx('conditionalGroup'));
   renderDocGroup(optional, tx('optionalGroup'));
 
+  // Back + Reset buttons
   const btnRow = document.createElement('div');
   btnRow.style.cssText = 'display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;';
 
@@ -1738,6 +2081,46 @@ function renderResults(c, caseId) {
   btnRow.appendChild(resetBtn);
 
   c.appendChild(btnRow);
+
+  // ── Bottom specialist card (desktop) ──────────────────────────────────────
+  const botCard = document.createElement('div');
+  botCard.style.cssText = [
+    'position:relative;overflow:hidden;margin-top:32px;',
+    'background:var(--glass-bg);',
+    'backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);',
+    'border-radius:18px;padding:24px 26px 22px;',
+    'border:0.5px solid var(--glass-border);border-left:4px solid var(--red);',
+    'box-shadow:var(--shadow-card);',
+  ].join('');
+  botCard.innerHTML =
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">' +
+      '<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(232,19,42,0.08);border:0.5px solid rgba(232,19,42,0.18);color:var(--red);padding:3px 11px 3px 8px;border-radius:100px;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">' +
+        '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M4 6.3l1.5 1.5L8 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        'Verified legal expertise' +
+      '</div>' +
+    '</div>' +
+    '<p style="font-size:13.5px;color:var(--text);line-height:1.65;margin-bottom:6px;font-weight:500;">' +
+      'Ready to submit? Get a specialist review first.' +
+    '</p>' +
+    '<p style="font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:18px;">' +
+      'This checklist is built on certified legal expertise across all Polish voivodeships. If your situation has details our questions could not fully capture, a pre-submission review ensures nothing is missed.' +
+    '</p>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;">' +
+      '<a href="mailto:info@kartaflow.pl" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--red) 0%,var(--red-deep) 100%);color:#fff;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;-webkit-tap-highlight-color:transparent;box-shadow:0 4px 20px rgba(232,19,42,0.28),0 1px 0 rgba(255,255,255,0.15) inset;letter-spacing:0.01em;">📋 Pre-submission review — 249 PLN</a>' +
+      '<a href="mailto:info@kartaflow.pl" style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,0,0,0.04);color:var(--text-2);padding:12px 22px;border-radius:100px;font-size:13px;font-weight:500;text-decoration:none;border:0.5px solid var(--border-strong);-webkit-tap-highlight-color:transparent;">💬 Free question</a>' +
+    '</div>';
+  c.appendChild(botCard);
+
+  // ── Sticky bottom CTA (mobile only, injected once) ─────────────────────
+  if (!document.getElementById('stickyCTA')) {
+    const stickyCTA = document.createElement('div');
+    stickyCTA.id = 'stickyCTA';
+    stickyCTA.className = 'sticky-cta';
+    stickyCTA.innerHTML =
+      '<div class="sticky-cta-text"><strong>Ready to submit?</strong><br>Review with a specialist first</div>' +
+      '<a href="mailto:info@kartaflow.pl" class="sticky-cta-btn">249 PLN — Book review</a>';
+    document.body.appendChild(stickyCTA);
+  }
 }
 
 function goNext() {
